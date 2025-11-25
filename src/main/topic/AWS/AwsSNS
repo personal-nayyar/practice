@@ -1,0 +1,14 @@
+SNS:
+  Fully managed aws Notification service
+  Pub/Sub service for A2A and A2P messaging
+features:
+  A2A
+  A2P
+  DLQs
+  reduced-cost
+
+concept:
+  publisher
+  topic
+  subscription
+

@@ -1,0 +1,3 @@
+I need to create a school management system where we have three classes, student, teacher, and classroom.
+ We need to design the JPA entities and relationships around them
+  And then we will be having some queries, JPU queries, right?

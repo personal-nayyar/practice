@@ -1,0 +1,80 @@
+Kafka:
+	- Kafka is a distributed event streaming platform that allows us to:
+	- works on pub-sub model
+		- Publish and subscribe to streams of records, similar to a message queue or enterprise messaging system.
+		- Store streams of records in a fault-tolerant durable way.
+		- Process streams of records as they occur.
+	    - Kafka is run as a cluster on one or more servers that can span multiple datacenters.
+
+	- topic:
+	    - A topic is a category or feed name to which records are published.
+	    - Topics in Kafka are always multi-subscriber; that is, a topic can have zero, one, or many consumers that subscribe to the data written to it.
+	- Partition:
+	    - Topics are split into partitions to enable parallelism.
+	    - Each partition is an ordered, immutable sequence of records that is continually appended to—a structured commit log.
+	    - The records in the partitions are each assigned a sequential id number called the offset that uniquely identifies each record within the partition.
+	- Producer
+		- Producers publish data to the topics of their choice.
+	- Consumer
+		- Consumer subscribes to one or more topics and reads the messages in the order in which they were produced.
+		-
+
+Producing strategies:
+	- At most once: The producer sends a message and does not really care if it arrives or not.
+	- At least once (default): The producer sends a message and wants to make sure that it arrives, but it does not care if it arrives more than once.
+	- Exactly once: The producer sends a message and wants to make sure that it arrives only once.
+
+Acknowledgement while producing:
+	ack = 0: we’re saying that we don’t want to receive the ack from Kafka.
+	ack = 1: default configuration, with that we’re saying that we want to receive an ack from the leader of the partition.
+	ack = all: their replicas as well.
+
+Acknowledgement while consuming:
+	- The consumer can also send acks to Kafka, to tell that the message was consumed.
+	- The consumer can send the ack in two ways:
+		- Manual: the consumer will send the ack after processing the message.
+		- Automatic: the consumer will send the ack automatically after receiving the message.
+	- The consumer can also configure the acks in two ways:
+		- Enable.auto.commit = true: the consumer will send the ack automatically after receiving the message.
+		- Enable.auto.commit = false: the consumer will send the ack manually after processing the message.
+
+- by default(if no hash key), the producers will send the message in a round-robin way.
+ That hash takes into consideration the number of the partitions of the topic,
+ that’s why that number cannot be changed when the topic is already created.
+
+- This offset is unique at the partition level, each partition has its owns offsets.
+
+Kafka-retention:
+- log based not queue based
+- That is one more reason that makes Kafka so special, it stores the messages in the disk to be able to recover them later if necessary.
+Different from a messaging system, that the message is deleted after being consumed.
+- Kafka has a retention policy that can be configured in two ways:
+	- Time-based retention: we can configure the time that the messages will be stored in the disk.
+		- The default value is 7 days.
+	- Size-based retention: we can configure the size that the messages will be stored in the disk.
+		- The default value is 1GB.
+    - The retention policy can be configured at the topic level or at the broker level.
+
+
+
+- Each broker in a cluster is identified by an ID and contains at least one partition of a topic.
+- After connecting to any broker (called a bootstrap broker), you will be connected to the entire cluster.
+- The partitions are distributed among the brokers in the cluster, and each broker is responsible for one or more partitions.
+
+Replication:
+To configure the number of the partitions copy in each broker, we need to configure something called Replication Factor when creating a topic.
+It will ensure that even if a broker goes down, his data won’t be lost, because of the replicas.
+
+leader-follower architecture:
+- When a leader goes down, a replica will be automatically elected as a new leader by Zookeeper.
+
+
+
+
+RabbitMQ                    Kafka                               Aws-Kinesis             Aws-SQS
+queue based                 log based                           log based               queue bases
+no retention                retention/replay                    retention upto 7 days   no retention
+producer coupled            consumer coupled                    shard base              FIFO, one delivery guaranteed
+complex routing             high throughput                     high throughput         less throughput
+transactional               stream events                       stream events           transactional/event based (put S3) processing
+no partition                partition logic                     shard logic             no parallel

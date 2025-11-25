@@ -1,0 +1,169 @@
+project explanation:
+composition vs associations in java
+- composition
+	- strong relationship(Ownership)
+	- if parent object is destroyed then child object is also destroyed
+	- has-a relationship
+	- example: car and engine
+- association
+	- weak relationship
+	- if parent object is destroyed then child object is not destroyed
+	- uses-a relationship
+	- example: car and driver
+- aggregation
+	- weak relationship
+	- if parent object is destroyed then child object is not destroyed
+	- example: car and wheel
+
+class A {
+    void m1() {
+        System.out.println("In m1 A");
+    }
+}
+
+class B extends A {
+    void m1() { System.out.println("In m1 B");
+    }
+    void m2() { System.out.println("In m2 B"); }
+}
+public class Test {
+    public static void main(String[] args) {
+        A a =new B();
+        B b = new B();
+        a.m2(); // CE
+        a.m1();
+        b.m2();
+    }
+}
+
+
+Student(name,ID,marks,grades)
+    75-A,
+    50-75-B,
+    35-50 -c
+    35 - F
+give me java code to calculate the grades of students count in each grade
+	class Student{
+		String name;
+		int id;
+		int marks;
+		String grade;
+	}
+    public Map<String, Integer> getGradesCount(List<Student> students){
+        Map<String, Integer> map = new HashMap<>();
+        for (Student student : students){
+            if (student.marks >= 75){
+                map.put("A", map.getOrDefault("A", 0) + 1);
+            }else if (student.marks >= 50){
+                map.put("B", map.getOrDefault("B", 0) + 1);
+            }else if (student.marks >= 35){
+                map.put("C", map.getOrDefault("C", 0) + 1);
+            }else {
+                map.put("F", map.getOrDefault("F", 0) + 1);
+            }
+        }
+        return map;
+
+        if grade given then return count of that grade
+        public int getGradeCount(List<Student> students, String grade){
+            int count = 0;
+            for (Student student : students){
+                if (student.grade.equals(grade)){
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        using java stream
+        public Map<String, Integer> getGradesCount(List<Student> students){
+            return students.stream().collect(Collectors.groupingBy(Student::getGrade, Collectors.counting()));
+        }
+
+        frequency of each character in a string using stream
+        public Map<Character, Integer> getFrequency(String str){
+            return str.chars().mapToObj(c -> (char) c).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        }
+
+        rotate the array k times
+        public void rotate(int[] arr, int k){
+            int n = arr.length;
+            k = k % n;
+            reverse(arr, 0, n-1);
+            reverse(arr, 0, k-1);
+            reverse(arr, k, n-1);
+        }
+
+        given a list of sorted linked list, merge them into one sorted linked list
+        public Node merge(List<Node> nodes){
+            PriorityQueue<Node> pq = new PriorityQueue<>((a, b) -> a.val - b.val);
+            for (Node node : nodes){
+                pq.add(node);
+            }
+            Node head = new Node(-1);
+            Node temp = head;
+            while (!pq.isEmpty()){
+                Node node = pq.poll();
+                temp.next = node;
+                temp = temp.next;
+                if (node.next != null){
+                    pq.add(node.next);
+                }
+            }
+            return head.next;
+        }
+        without using pirority queue
+        public Node merge(List<Node> nodes){
+            Node head = new Node(-1);
+            Node temp = head;
+            while (true){
+                Node minNode = null;
+                int minIndex = -1;
+                for (int i = 0; i < nodes.size(); i++) {
+                    Node node = nodes.get(i);
+                    if (node != null){
+                        if (minNode == null || minNode.val > node.val){
+                            minNode = node;
+                            minIndex = i;
+                        }
+                    }
+                }
+                if (minNode == null){
+                    break;
+                }
+                temp.next = minNode;
+                temp = temp.next;
+                nodes.set(minIndex, minNode.next);
+            }
+            return head.next;
+        }
+        via using recursion
+        public Node merge(List<Node> nodes){
+            if (nodes.size() == 0){
+                return null;
+            }
+            if (nodes.size() == 1){
+                return nodes.get(0);
+            }
+            Node head = new Node(-1);
+            Node temp = head;
+            Node minNode = null;
+            int minIndex = -1;
+            for (int i = 0; i < nodes.size(); i++) {
+                Node node = nodes.get(i);
+                if (node != null){
+                    if (minNode == null || minNode.val > node.val){
+                        minNode = node;
+                        minIndex = i;
+                    }
+                }
+            }
+            temp.next = minNode;
+            temp = temp.next;
+            nodes.set(minIndex, minNode.next);
+            temp.next = merge(nodes);
+            return head.next;
+        }
+    }
+
+ */

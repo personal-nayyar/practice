@@ -1,0 +1,18 @@
+Amazon-kinesis: (Data streaming platform like kafka)
+	can be think as an alternative to kafka,
+	Amazon Kinesis is also a publish and subscribe (pub/sub) messaging solution
+	Data streaming platform, ingest, process/analyse and deliver data to difference destination.
+	Kinesis-steam: producer,shard,consumer
+	Kinesis-firehose: managed, put into s3, redShift
+	kinesis-analytics: can perform SQL on in-memory analytics data
+		Generate time-series analytics, Feed real-time dashboards, Create real-time metrics
+
+
+	keys            kakfa                           vs                          kinesis:
+	mngm            need on premisis mngmt										managed services
+	integration     flexible to integrate										aws eco-system
+	flexibility     more flexibity and full control                             less flexible (most of the maintenance and configurations are hidden from the user)
+	data-storage    store data in kafka partitions log based                    store data in kinesis shard
+	cost            lower cost                                                  higher cost
+	mngm team       (mgmnt dependable, no direct cost as open-source)           aws service
+	Data-retention  User-defined (default 7 days)                               Up to 7 days

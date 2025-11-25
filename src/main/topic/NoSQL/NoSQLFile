@@ -1,0 +1,37 @@
+Relational: RDBMS
+document-data: MongoDB/ElasticSearch
+columnar-data: cassandra
+Cache : Redis
+Blob  : S3+CDN
+textSearch: ES, Solar
+timeSeries: InfluxDB, openTSDB
+analytics-data: hadoop-HDFS
+
+parameter                           sql                       Nosql
+insertion-retrieval
+data-structure                      predefined schema        dynamic
+data-model                          relational tables        documents/column/key-value/graph
+volume                              stable volume            rapidly increasing volume
+scaling                             vertical                 horizontal
+consistency                         immediate consistent     eventual consistent
+query-lang                          SQL                      API
+design-structure-ACID               ACID                     BASE
+join                                well supported           don't support
+normalization/redundancy            normalized               denormalized
+
+
+parameter                           mongoDB                  DynamoDB                       cassandra
+data-structure                      unstructured             unstructured                   structured
+                                    (can enforce schema)     (can't enforce schema)
+data-model                          documents (rich-data)    key-value, documents           columnar
+clustering-configuration            mongo-master             no-config needed               all-master
+                                    mongo-client,            followed master-replica
+                                    mongo-config-server      handled by aws itself
+availability                        master-slave-model       master-slave model             all-master(100% avail)
+write-intensive                     slow                     fast(partition key)            fastest
+query                               complex-query            finite-query                   finite-queries
+data-agg                            support-well             supported with aws services    don't support
+Deployment-env                      Run Anywhere             Locked-in AWS                  Run Anywhere
+managed                             required DevOps          aws managed                    required DevOps
+Database-security                   required security        in-build via API               required security
+Pricing                             Consistent(costlier)     Throughput-based pricing       Consistent(costlier)

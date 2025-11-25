@@ -1,0 +1,24 @@
+cloud-computing:
+on premises: Application, data runTime, Middleware, OS, virtualization, servers, storage, networking
+infrastructure as a service: Application, data runTime, Middleware, OS like EC2
+platform as a service: application, data ex: Aws-openSearch, aws-CloudWatch,
+software as a service: nothing manage, aws, SQS, SNS
+
+AWS s3: simple storage service [everything is stored as an object]
+features:
+	scalability:
+	availability:
+	Data-security
+	performance:
+	cost-effective: cost as per use, diff storage class
+
+s3-bucket: nothing just like a folder/container. there is nothing like folder in s3,
+	every time you create folder will be treated as separate bucket/
+
+s3-storage classes;
+	standard
+	standard_IA
+	onezone_IA
+	glacier
+	deep-archived-glacier
+

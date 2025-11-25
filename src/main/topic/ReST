@@ -1,0 +1,30 @@
+ReST: Representational State Transfer
+	- define contract of representation format of state(of data) which is agreed b/w client n server
+	- define guidelines how client n server exchange representation state of data
+
+guidelines:
+	- client-server
+	- cacheable : define if cacheable or not
+	- stateless: doesn't know about the request/response state
+	- layered: know about immediate layer only
+	- uniform-interface: all API should follow uniform interface like not one API is implemented on Http and another in SMTP
+		and for same type of resource, diff url/uri used
+	- code on demand:
+
+REST:
+	GET     URI         data
+	POST    URI         payload         response
+	PUT     URI         payload         response
+	DELETE  URI                         response
+
+Note:
+	state transfer (refer to the state of data)
+	stateless (server should not know about client, should follow all request as same no discrimination)
+
+Http response code:
+	2xx - success
+	3xx - redirection
+	4xx - client operation error
+	5xx - server operation error
+
+

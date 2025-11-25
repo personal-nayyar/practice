@@ -1,0 +1,40 @@
+Project discussion:
+    Merchant-analytics:
+    - B2C project : AuctionService
+    - FronEnd Tech: Angular which version: 10
+                    React which version: 17
+    Security: Oauth /Jwt based authentication along with spring security
+
+SQL injection:
+    What is SQL Injection?
+    A vulnerability where untrusted input is treated as part of an SQL command, allowing an attacker to change the query’s behavior (read/modify/delete data, bypass auth).
+    Vulnerable example (JDBC, DO NOT DO THIS):
+    // BAD: concatenating user input into SQL
+    String username = request.getParameter("user");
+    String sql = "SELECT * FROM users WHERE username = '" + username + "'";
+    Statement stmt = conn.createStatement();
+    ResultSet rs = stmt.executeQuery(sql);
+    If attacker sends user = ' OR '1'='1, the query becomes:
+    SELECT * FROM users WHERE username = '' OR '1'='1'
+
+    Safe fix — use parameterized queries (PreparedStatement):
+    String sql = "SELECT * FROM users WHERE username = ?";
+    PreparedStatement ps = conn.prepareStatement(sql);
+    ps.setString(1, username);
+    ResultSet rs = ps.executeQuery();
+
+    Prepared statements keep data separate from code, preventing injection.
+
+    Quick prevention checklist
+    	•	Use parameterized queries / prepared statements (primary defense).
+    	•	Use ORMs (e.g., JPA/Hibernate) correctly — avoid native queries with concatenation.
+    	•	Apply input validation & whitelisting (only allow expected formats).
+    	•	Use least-privilege DB accounts (avoid giving app users DDL or admin rights).
+    	•	Enable logging, monitoring, WAF, and perform regular security testing (SAST/DAST, pen-tests).
+
+    In one sentence:
+    SQL injection happens when user input is mixed into SQL; prevent it by separating code from data (prepared statements), validating input, and restricting DB privileges.
+
+Dependency injection:
+    object’s dependencies are provided (injected) from the outside rather than the object creating
+    It’s a form of Inversion of Control (IoC) — the object asks for what it needs instead of constructing it.

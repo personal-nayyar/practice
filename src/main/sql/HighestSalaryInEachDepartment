@@ -1,0 +1,58 @@
+Nth highest salary from employee table
+    SELECT DISTINCT salary
+    FROM employee
+    ORDER BY salary DESC
+    LIMIT 1 OFFSET N-1; (skip N-1 rows because offset start from 0)
+
+highest salary in each department by joining employee and department table
+    SELECT d.department_id, d.department_name, MAX(e.salary) AS highest_salary
+    FROM employee e
+    JOIN department d ON e.department_id = d.department_id
+    GROUP BY d.department_id, d.department_name;
+
+full name by concatinating first_name and last_name
+    SELECT CONCAT(EmpFname, ' ', EmpLname) AS 'FullName' FROM EmployeeInfo;
+
+employees who also hold the managerial position
+    select * from Employee e
+    join EmployeePos ep
+    on e.id = ep.emp_id
+    where ep.position =  'Manager'
+
+    join
+    ----
+    SELECT DISTINCT E.FullName
+    FROM EmployeeDetails E
+    INNER JOIN EmployeeDetails M
+    ON E.EmpID = M.ManagerID;
+
+    self-join
+    --------
+    SELECT e.*
+    FROM Employee e
+    JOIN Employee m ON e.employee_id = m.manager_id
+    WHERE e.manager_id IS NOT NULL;
+
+position-wise min/max salary
+    SELECT ep.position_name,
+        MIN(e.salary) AS min_salary,
+        MAX(e.salary) AS max_salary
+    FROM Employee e
+    JOIN EmployeePosition ep ON e.employee_id = ep.employee_id
+    WHERE e.salary IS NOT NULL
+    GROUP BY ep.position_name;
+
+duplicate record from employee table
+    select emp_id, emp_name, count(*) as count
+    from employee
+    GROUP by emp_id, emp_name
+    having count > 1
+
+employee working in the same department
+    Select DISTINCT E.EmpID, E.EmpFname, E.Department 
+    FROM EmployeeInfo E, Employee E1 
+    WHERE E.Department = E1.Department AND E.EmpID != E1.EmpID;
+
+mysql currenent date and date-time
+    SELECT NOW()
+    SELECT CURR_DATE();

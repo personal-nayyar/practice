@@ -1,0 +1,27 @@
+Any other service from AWS expect ec2, s3
+    - aws lambda, openSearch
+
+Order Management system:
+interface IOrder{
+    void setName(String name);
+    String getName();
+    void setPrice(int price);
+    int getPrice();
+}
+
+interface IOrderManagement{
+    void addToCart(IOrder order);
+    void removeFromCart(IOrder order);
+    int calculatePrice();
+    Map<String, Integer> discountCategory();
+    Map<String, Integer> cartItems();
+}
+
+class Order implements IOrder{
+
+}
+
+class OrderManagement implements IOrderManagement{
+
+}
+

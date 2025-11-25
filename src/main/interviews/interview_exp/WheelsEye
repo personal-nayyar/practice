@@ -1,0 +1,115 @@
+WheelsEye
+----------
+what is spark
+	distributed data processing/computer framework
+
+why did you use spark
+	- Unified API:
+		- unified API support in scala, java, python, R
+		- spark-shell
+        - spark-sql
+	- Speed:
+	   - In-memory computation
+	   - distributed/parallel computation
+	-fault tolerance
+		- RDD keeps track of operations/transformation applied. if any node fails, it can be recomputed
+	- scalability
+		- can be scaled horizontally
+	- lazy evaluation
+		- spark does not execute the operation until an action is performed
+	- versatile
+		- batch processing
+		- stream processing
+		- machine learning
+	Integration:
+		- Hadoop ecosystem
+	- Community
+		- open source
+		- large community
+		- active development
+
+
+- Rest api you have created? POST,GET,PUT,PATCH
+	- Rest is a architectural style for designing networked API
+	- define principles for creating ReST API
+		- client-server
+		- stateless
+		- cacheable
+		- layered system
+			- client does not know if it is connected to end server or intermediate server
+		- uniform interface
+		- code on demand
+		    - server can extend client functionality by transferring executable code
+
+- MircoService architecture benefits and drawback
+- SQL vs NoSQL
+	SQL
+		- relational database
+		- predefined schema
+		- vertically scalable
+		- ACID properties
+		- not suitable for hierarchical data storage
+		- suitable for complex queries
+		ex: mysql, oracle, postgresql
+	NoSQL:
+		- non relational database
+		- dynamic schema
+		- horizontally scalable
+		- not suitable for complex queries
+		- suitable for hierarchical data storage
+		- BASE properties
+		- CAP theorem
+			- consistency
+			- availability
+			- partition tolerance
+		- types
+			- key-value
+				ex: redis, memcached
+			- document
+				ex: mongodb, couchdb
+			- column
+				ex: cassandra, hbase
+			- graph
+				ex: neo4j, orientdb
+Indexing
+	Indexing is a way to optimize the performance of a database by minimizing the number of disk accesses required when a query is processed.
+Indexing in Mysql:
+	CLUSTERED INDEX:
+		- physically reorders the data in the table
+		- only one clustered index per table
+		- faster to read than non clustered index
+		- slower to write than non clustered index
+	NON CLUSTERED INDEX:
+		- does not alter the physical order of the table
+		- can be created on columns that are not unique/primary key
+
+how do you improve performance of elasticsearch
+	- Enough memory to the file system cache
+		- give only 50% of memory to RAM or else increase the HARDWARE as we don't have control over the file system cache
+	- Document modeling
+		- optimize the document structure, ex: keyword or text, consider mapping as keyword if you don't need to full search on that field
+		- optimal shard size and replica size
+	- Refresh interval
+		- default is 1 second
+		- increase the refresh interval
+	- Optimized bulk requests, field usage, query usage
+	- Pre-index data
+	- avoid scripting
+	- avoid aggregation queries
+	- elastic monitoring
+
+
+- project explanation
+	- what is the problem you are trying to solve
+	- what is the solution you have provided
+	- what is the architecture you have used
+	- what is the tech stack you have used
+	- what is the challenges you have faced
+	- what is the learning you have got
+	- what is the future scope of the project
+
+
+- how do you use aws cloud
+   - aws s3
+   - aws ec2
+   - aws lambda

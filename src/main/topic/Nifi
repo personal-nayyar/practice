@@ -1,0 +1,25 @@
+Nifi: stream data-flow management tool,
+	it define how will flow b/w systems
+flowFile:(abstraction of data) actual data -> csv,json,plainText, sqlQuery etc.
+	- content:
+	- attribute(meta-data):
+processor: atomic element of nifi that can do specific atomic task.
+	processor work-on/process flowFile and generate new flowFile
+	ex: getFile processor, putFile processor
+connection: processor are connected via connection, each connection act as queue b/w processor and contain flowFiles.
+back-pressure: threshold for processor to stop producing flowFiles
+process-group: collection of processor working together to perform complete data-flow.
+
+input-output port or process-group-connection: we can connect two process-group using input/output port of nifi.
+funnel: used to connect multiple processor without input/output port. input-output port can connect two parallel processor-group only.
+
+processor configuration:
+connection-queue: each connection acts as a queue for flowFiles
+expression-language: ${flowFile_attribute}
+nifi-template: snapshot of a processor group, moving processor group on one evn(dev) to another(test/stage)
+
+4V's
+Volume — At what scale do you operate? In order of magnitude, are you closer to a few GigaBytes or hundreds of PetaBytes?
+Variety — How many data sources do you have? Are your data structured? If yes, does the schema vary often?
+Velocity — What is the frequency of the events you process? Is it credit cards payments? Is it a daily performance report sent by an IoT device?
+Veracity — Can you trust the data? Alternatively, do you need to apply multiple cleaning operations before manipulating it?

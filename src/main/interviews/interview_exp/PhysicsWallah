@@ -1,0 +1,65 @@
+Given a zero-indexed array H of height of buildings, number of bricks b and number of ropes r.
+You start your journey from building 0 and move to adjacent building either using rope or bricks.
+You have limited number of bricks and ropes.
+While moving from ith building to (i+1)th building,
+
+if next building's height is less than or equal to the current building's height, you do not need rope or bricks.
+if next building's height is greater than current building's height, you can either use one rope or (h[i+1] - h[i]) bricks.
+So, question is How far can you reach from 0th building if you use bricks and ropes optimally? return index of building till which you can move.
+
+Example 1:
+
+Input : H = [4,2,7,6,9,11,14,12,8], b = 5, r = 2
+Output: 8
+Explanation: use rope to move from index 1 to index 2.
+use 3 bricks to move from index 3 to index 4.
+use 2 bricks to move from index 4 to index 5.
+use rope to move from index 5 to index 6.
+so we can reach at the end of the array using 2 ropes and 5 bricks.
+Example 2:
+
+Input : H = [4,2,7,6,9,11,14,12,8], b = 5, r = 1
+Output: 5
+Explanation: use rope to move from index 1 to index 2.
+use 3 bricks to move from index 3 to index 4.
+use 2 bricks to move from index 4 to index 5.
+so we can reach at index 5 using 1 ropes and 5 bricks.
+
+Q2: Roman number to integer
+
+- ACID properties
+	- Atomicity
+		- Either all or none of the transactionn is executed
+	- Consistency
+		- Data is consistent before and after transactionn
+	- Isolation
+		- Concurrent transactions do not affect each other
+	- Durability
+		- Once transactionn is committed, it is permanent
+
+- CAP theorem
+	- Consistency
+		- All nodes/databases see the same data at the same time
+	- Availability
+		- Every request gets processed even if some nodes are down without consistent data guarantees
+	- Partition Tolerance
+		- System continues to work despite network failures.
+	CP: Consistency and Partition Tolerance, but no Availability
+		- Example: RDBMS
+	AP: Availability and Partition Tolerance, but no Consistency
+		- Example: DynamoDB, Elasticsearch
+	CA: Consistency and Availability, but no Partition Tolerance
+		- Example: Google Spanner
+
+
+Messaging Queue
+ - A messaging queue is a form of asynchronous service-to-service.
+	- RabbitMQ
+
+CDN
+ - geographically distributed group of servers which work together to provide fast delivery of Internet content.
+ - The primary goal of a CDN is to reduce latency
+ - The closer the CDN server is to the user geographically, the faster the content will be delivered to the user.
+ - Akamai, Amazon CloudFront
+
+

@@ -1,0 +1,32 @@
+This project (engineering-interview-SSE) is a full Spring Boot backend project with:
+
+Features currently present
+	•	Customer entity + controller
+	•	CRUD endpoints
+	•	JPA + Flyway migration
+	•	Integration tests
+	•	Security configuration
+	•	POM setup
+
+The project likely expects you to implement one of the following:
+	1.	Missing endpoints (GET all, GET by ID, POST, PUT, DELETE)
+	2.	Service layer logic
+	3.	Exception handling
+	4.	DTO + Mapper
+	5.	Unit tests
+	6.	Database interactions
+	7.	Something mentioned in the README.md
+
+I can implement everything end-to-end — but I need to know the requirement.
+
+⸻
+
+👉 Please tell me what part you want implemented.
+Examples:
+	•	“Implement the customer service logic”
+	•	“Implement all REST APIs”
+	•	“Implement update & delete functionality”
+	•	“Complete the assignment as per README”
+	•	“Fix the failing tests”
+
+Once you tell me, I will write the full Java implementation. ￼

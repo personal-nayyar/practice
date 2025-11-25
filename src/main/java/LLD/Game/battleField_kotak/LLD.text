@@ -1,0 +1,60 @@
+// APIs
+initGame(int n)
+
+/api/games/start // create a new game
+
+/api/games/<GameId> // get game state
+
+/api/games/<GameId>/moves/
+
+/api/games/<GameId>/moves/<MoveId>
+
+
+class Game{
+    String id;
+    Player playerA;
+    Player playerB;
+    Player winner
+    Move[] moves;
+    BattleField bf;
+}
+
+class Battlefield{
+     int n;
+}
+
+class Ship{
+    Owner user;
+    int size;
+    Set<Coordinates> coordinates;
+}
+
+interface FireStrategy{
+}
+
+enum Owner{
+    PlayerA,
+    PlayerB;
+}
+
+class Player{
+    String id;
+    Owner user;
+    Set<Ships> ships;
+}
+
+class Move{
+    String id;
+    Player player;
+   Coordinates coordinates;
+}
+
+Class Coordinates{
+    int x;
+    int y;
+}
+
+
+
+
+

@@ -1,0 +1,84 @@
+jsw
+---
+- Containerization & docker
+	- will check it tomorrow
+- Micro-service architecture
+    - Advantages
+		- fault tolerance
+		- independent deployment
+		- independent scaling
+		- independent technology stack
+		- independent testing and deployment
+		- small team size
+	- disAdvantage
+		- high latency
+		- complex to debug and trace
+		- distributed transaction
+
+- Service Registry vs load balancer
+	- Service registry
+		- service registry is a database of services in a distributed system
+		- purpose: allow dynamic updates when services go up or down without hardcoding hostnames and ports.
+	- load balancer
+		- load balancer is a software/hardware device that distributes application traffic across a number of servers
+		- purpose: to optimize resource utilization, maximize throughput, minimize response time, and avoid overloading any single resource.
+	-relationship
+		-Service Registries allow dynamic updates when services are added or removed.
+		 Load Balancers can use this information from the Service Registry to adapt to changes in the system's architecture.
+
+
+- Rest Template
+	- Http Client to perform sync operation
+	- RestTemplate is in maintenance mode, and developers are encouraged to use the more modern WebClient for new projects.
+
+- Oops concept with example (P.A.I.E)
+	- encapsulation
+		- wrapping up of data and methods into a single unit
+		- example: class
+	- abstraction
+		- hiding the implementation details from the userSplitWise
+		- example: interface
+	- inheritance
+		- acquiring the properties of one class into another class
+		- example: extends
+	- polymorphism
+		- one name many forms
+		- example: overloading and overriding
+
+Diamond problem in java
+	- multiple inheritance
+	- solution
+		- java 8: default method
+Deadlock in java
+	- two or more threads are waiting for each other to release the resource
+	- mutual exclusion
+	- hold and wait
+	- no preemption
+	- circular wait
+
+- ArrayList vs LinkedList
+	- Data structure
+		- ArrayList is internally backed by an array
+		- LinkedList is internally backed by a doubly linked list data structure
+	- Random access
+		- ArrayList gives constant time performance O(1) while LinkedList gives O(n) performance.
+	- insertion and deletion
+		- LinkedList gives O(1) performance while ArrayList gives variable performance: O(n) in worst case (while adding or removing at the end) and O(1) in best case (while adding or removing at the start).
+	- Memory overhead
+		- ArrayList maintains indexes and element data while LinkedList maintains element data and two pointers for neighbor nodes
+		hence the memory consumption is high in LinkedList comparatively.
+	- iterating performance
+		Iterating through elements is faster than LinkedList due to better cache locality.
+	- usage
+		- LinkedList is better for manipulating data.
+		- ArrayList is better for storing and accessing data.
+
+- Optimisation and performance improvement task recently
+	- reduce the number of nodes in the cluster
+	- kafka consumer lag reduced
+	- graviton migration
+	- removal of legacy mysql 5.7.11 to 8.0.33
+	- decommissioning of nifi cluster and switching to spark streaming
+
+- Reason for job change
+	- looking for a challenging role

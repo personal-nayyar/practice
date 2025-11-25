@@ -1,0 +1,68 @@
+key aspect for any search engine
+-indexing | how the data is being stored
+-data retrieval | how the data ie being retrieved
+
+elasticsearch: (json based distributed) full text search engine build on top of apache lucene (inverted index)
+	- schemaless just like noSQL
+
+Inverted index:
+	mapping from contents(such as words or numbers) ---> to its locations(id) in a database
+	document -> analyser(xml,txt,json) -> tokenizer(token/term) -> inverted index
+	list down all the unique terms/token (word) of documents as ID  -> list down all document in which term appears.
+	https://www.youtube.com/watch?v=M08x1D3pVeE&ab_channel=TechoGenius
+
+mapping:
+	dynamic: true
+	why mapping: to tell searchable fields
+	1000 fields, define mapping 10-12, only 10-12 field will be used in indexing and searchable
+	Note: By default all the field are searchable
+
+cache-query:
+	cache freq queries result set for better performance
+
+we have primary shard and replica shard (configured) on other system (fault tolerance)
+all the write are made to the primary shard
+Master-node: responsible for cluster related operation such modify cluster setting, index and shard configuration
+data-nodes: hold actual data in the form of shards and perform crud operation
+client-node: elected data-nodes responsible for hitting ES query and collect result from diff shards.
+
+shard: an index is not where data is actually stored, shard it is.
+	index are divided into multiple small pieces called shard.
+	each shard is fully functional index and can be hosted on any machine.
+	The number of primary shards in an index is fixed at the time that an index is created,
+	but the number of replica shards can be changed at any time, without interrupting indexing or query operations.
+	Note: As a general rule, the number of shards per 1 GB of heap space should be less than 20.
+	the current default value for the number of primary shards per index is 1.
+	The number of replicas each primary shard has. Defaults to 1.
+	
+Q: why the ES index is divided into shards.
+	In Elasticsearch, each query is executed in a single thread per shard.
+	   Multiple shards can however be processed in parallel, Shards are basically used to parallelize work on an index.
+	   (can be thing as partitions in kafka for a topic)
+	If fast ingestion/retrieval is your biggest concern, you should have at least one shard per data node.
+		Alternatively, you can also have a number that is evenly divisible by the number of data nodes.
+		For instance, if you have 3 data nodes, you should have 3, 6 or 9 shards. (n * data-nodes)
+
+	After that, each shard locally computes a list of results with document IDs and scores (“query phase”).
+		Those partial results are sent back to the coordinating node(client) which merges them into a common result.
+		Then the second phase begins (known as “fetch phase”) where a list of documents gets fetched.
+
+elasticSearch APIs:
+Document API: index(PUT) API, GET API, UPDATE(PUT) API, DELETE API
+search API: _search, _count etc.
+aggregation API : agg {}
+Index API: Create Index, Open/Close Index, Index Alias, Index template etc.
+cluster API: _health, _stat, node stat, _task etc.
+
+- how ES is so fast:
+	- inverted index + hashMap (O(1))
+	- in-memory data keep as much as possible
+	- multi tier index: (1) request level (2) data level - frequent hit lucene index
+	- duplicate-data redundancy(replicas):
+
+elasticsearch vs openSearch(AWS elasticsearch service)
+
+ELK:
+	elasticSearch: distributed NoSQL database/search-engine based on json
+	LogStash (data-collector): which collect data from diff source/stream and push into ES.
+	Kibana: visualization/interactive tool to work with elasticSearch data.

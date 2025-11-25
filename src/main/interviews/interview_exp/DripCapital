@@ -1,0 +1,136 @@
+DripCapital
+-----------
+Merchant-analytics
+    - Transaction Trends (Payment Sources analytics)
+    - Success/Failure rates Analysis
+    - Customer Segmentation
+    - Industry comparison
+
+INDEXING on DATABASE
+	id |name | address | phone | email | gender
+Cluster and non-cluster
+
+
+Different types of queries:-
+             INDEXING INCREASE THE throughput
+Select   YES
+Insert   NO
+Update   NO
+Delete   NO
+
+
+25 Horses
+We can race 5 at a time
+Want to know fastest 3 horses out of all 25
+How many races will it take ?
+
+
+SOLID PRINCIPLES
+DESIGN PATTERNS
+ - CREATIONAL
+    - SINGLETON
+    - FACTORY
+    - ABSTRACT FACTORY
+    - BUILDER
+ - STRUCTURAL
+    - DECORATOR
+    - ADAPTER
+    - FACADE
+ - BEHAVIORAL
+    - STRATEGY
+    - OBSERVER
+    - ITERATOR
+
+Find missing and repeating number in an array:-
+
+Multithreading concepts:
+- Thread
+- Runnable -> does not return anything
+	class MyRunnable implements Runnable {
+		public void run() {
+			// code
+		}
+	}
+
+	class MyThread extends Thread {
+		public void run() {
+			// code
+		}
+	}
+
+	main() {
+		MyRunnable r = new MyRunnable();
+		Thread t = new Thread(r);
+		Thread t1 = new MyThread();
+		t.start();
+		t1.start();
+	}
+
+- ExecutorService -> thread pool
+   class ExecutorServiceExample {
+   	public static void main(String[] args) {
+   	    ExecutorService executor = Executors.newFixedThreadPool(4);
+		for (int i = 0; i < 10; i++) {
+   	        Runnable worker = new MyThread("Thread" + i);
+   	        executor.execute(worker);
+   	      }
+
+   	}
+   }
+
+- Callable -> return value and throws exception
+- Future -> result of a asynchronous computation 
+	- blocking operation
+		Future<Integer> futureResult = executor.submit(() -> {
+            Thread.sleep(2000);
+            return 42;
+        });
+
+        System.out.println("Doing other work while waiting for result...");
+
+        // Blocking call to get the result
+        int result = futureResult.get();
+- CompletableFuture -> 
+	- non blocking operation
+	- advanced version of Future that can be used to chain multiple asynchronous operations together
+		CompletableFuture<Integer> completableFuture = CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new IllegalStateException(e);
+            }
+            return 42;
+        });
+
+        System.out.println("Doing other work while waiting for result...");
+
+        // Non-blocking call to handle the result asynchronously
+        completableFuture.thenAccept(result -> System.out.println("Result: " + result));
+
+        // Main thread continues execution without waiting for the completion of the CompletableFuture
+        Thread.sleep(3000); // Wait a bit to see the output
+
+
+
+
+⸻
+1. The Old Guard: Future
+Represents the result of an asynchronous computation.
+	•	You submit a task to an ExecutorService, and it gives you a Future.
+	•	You can call:
+	•	get() → blocks until the result is available.
+	•	isDone() → checks if completed.
+	•	cancel() → tries to stop the task.
+	•	But… you cannot attach callbacks or chain computations. It’s a one-way street.
+
+
+⚙️ 2. The Modern Hero: CompletableFuture
+
+Introduced in Java 8 — it’s Future with superpowers.
+It implements both Future and CompletionStage, enabling non-blocking, reactive style code.
+
+✨ Characteristics
+	•	You can chain multiple async computations.
+	•	You can run tasks in parallel and combine results.
+	•	You can react to completion without blocking.
+	•	You can manually complete it (complete(value)).

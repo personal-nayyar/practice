@@ -1,0 +1,13 @@
+metric: data points over time range | compare data-points over time
+
+Aws-CloudWatch: Data visualisation and monitoring tool
+	visualisation+monitoring tool associated with diff aws services.
+	- collect data(log/stat) -> display in-build metrics, stats data -> monitor -> act
+Dashboard:
+	- create dashboard for insight of your applications.
+Alarm:
+	lets say EC2 instance can be upto 75% and an Alarm should be evoked once it crosses the range.
+	There are 3 alarm states:
+    OK – Within Threshold.
+    ALARM – Crossed Threshold.
+    INSUFFICIENT_DATA – Metric not available/ Missing data (Good, Bad, Ignore, Missing).

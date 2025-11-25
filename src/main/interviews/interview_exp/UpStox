@@ -1,0 +1,10 @@
+Given JSON message in the below format - { "A" : ["B", "C", "D"], "K" : ["I", "J"], "L" : ["G", "A", "E"] }
+Or CSV A, B, C, D K, I, J L, G, A, E
+// First column is the manager and the remaining columns are // his reportees.
+Keys are managers and values are his reporties.
+ Given employee -
+ Find out if he is a manager, if the employee is a manager, list all his reportees.
+
+queue using stacks
+	- enqueue costly
+	- dequeue costly

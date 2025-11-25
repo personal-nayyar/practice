@@ -1,0 +1,12 @@
+CDN:
+ - fast delivery of Internet content
+ - geographically distributed group of servers which work together to provide fast delivery of Internet content.
+  ex: aws-cloudFront
+
+benefits:
+increase-speed (website load-time)
+static content storage and delivery
+caching for fast deliver
+decrease main server load
+increase uptime/fault tolerance
+increase security

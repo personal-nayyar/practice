@@ -1,0 +1,22 @@
+Water-fall: 
+	sequencial 
+	full feature delivery, deliver as a whole
+Agile: 
+	Incremental development and delivery
+	iterative
+
+version-control: maintain diff version of the source code.
+continuous-integration: 
+	don't wait for integrate all the things as whole(let's say sprint end), continuously integrate small changes
+	compile, validate, code-review, unit-testing, integration testing, automation-testing ex: jenkins
+continuous-delivery: 
+	continuously making it available for deployment(let's say not production but mock servers) -> manual deployment
+continuous-deployment: 
+	commit code -> unit/automation test -> deploy on production
+
+Jenkins: open-source
+CI/CD tool written in java
+ex:
+	job1: git checkout branch, mvn install, mvn test --integration, -> .jar -> put to s3 location
+	job2: pick jar -> up docker mock container -> deploy to mock servers
+	job3:(manual) deploy image to production servers

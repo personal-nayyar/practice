@@ -1,0 +1,7 @@
+Our simple coffee machine allows users to select a coffee type and the volume.
+This is then sent as a request to the system with coffee type and volume being the parameters.
+The system then selects a coffee maker (expresso maker, flatwhite maker etc) based on request parameters
+The selected coffee maker then checks with the resource service for the ingredients required to make the request coffee
+If all the required ingredients are available, the coffee maker prepares the coffee and returns it otherwise, it returns an error that the ingredients are not available.
+
+https://estamba.medium.com/system-design-architecting-a-simple-coffee-machine-c8d99f16411d

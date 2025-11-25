@@ -1,0 +1,34 @@
+SQS:
+  Fully managed simple message queue service for microservices, distributed systems, and serverless applications
+  lets you send, store, and receive messages between software components at any volume, without losing messages or requiring other services to be available
+feature:
+  - fully managed: eliminates the complexity of managing and operating the servers
+  - no need upfront service to process request
+  - Standard and FIFO
+  - guarantee At-Least-Once Delivery
+  - message-batching
+  - cost as use
+
+
+awsSQS vs Kafka:
+  Kafka:
+  Overall a general purpose message broker.
+  Stream data processing framework/platform.
+  Highly scalable: system for large workloads that need to send messages in batches (for smooth message passing).
+  Topics in Kafka consists of multiple sections/partitions that are read in parallel
+    by different consumers of a group of consumers,which gives us a very good performance.
+  For example, if you need to create a very busy broadcast system, Kafka is a good fit.
+  'Ideal for streaming applications where throughput is a major concern'
+
+
+  SQS:
+  Operated by Amazon (so you don’t need to support the infrastructure).
+  Better suited for events, when you need to intercept a message (event) from the client, the message is automatically pulled from the queue.
+  Not as fast as Kafka and not suitable for large workloads.
+  Better for events with few events per second.
+  'Great fit if you want to respond to the download of an S3 file (start processing that file)'.
+
+  Summing up with SQS, you reduce the administrative tasks of running and scaling a highly available message pool, while getting what you use at an affordable price.
+  On the other hand, Kafka is best for high loads of data and leverages sequential disk I/O operations so needs less hardware.
+
+Note:  We say that Kafka is more scalable and should be used as a pipeline to process the stream. Instead, SQS is designed to move background tasks to an asynchronous pipeline.

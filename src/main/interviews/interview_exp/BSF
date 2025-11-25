@@ -1,0 +1,371 @@
+BSF
+---
+- microservice advantage vs disadvantage
+	- advantage
+		- Separation of concerns | well defined responsibility
+		- fault tolerance [Avoid single point of failure]
+		- independent deployment
+		- independent scaling
+		- independent technology stack
+		- independent testability and maintainability
+		- small team
+
+	- disadvantage
+		- high latency | network call
+		- Data consistency
+		- distributed transaction
+		- debugging and tracing
+
+
+- microservice communication
+    - synchronous
+        - rest
+        - grpc
+        - soap
+    - asynchronous [Event Driven]
+        - kafka
+        - rabbitmq
+        - jms
+
+- service registry and service discovery
+	- service registry
+		- eureka
+		- consul
+		- zookeeper
+	- service discovery
+		- ribbon
+		- feign
+		- load balancer
+
+
+- SOLID principle
+	- Single responsibility
+		ex:
+	        - controller should have only request mapping
+	        - service should have only business logic
+	        - repository should have only data access logic
+		each class should have only one responsibility
+			ex:
+				- if a class is responsible for sending email and sms, then it is violating single responsibility
+	- Open closed
+		- open for extension
+		- closed for modification
+		- ex:
+			- if we want to add new functionality, we should not modify existing code, instead we should extend it
+	- Liskov substitution
+		- sub class should be able to replace parent class without any issue
+		- ex:
+			- if we have a parent class which has a method which takes parent class as argument, then sub class should be able to replace parent class without any issue
+			example:
+				- if we have a method which takes list as argument, then we should be able to pass ArrayList, LinkedList, Vector, Stack, etc
+			real world example:
+				- if we have a method which takes animal as argument, then we should be able to pass dog, cat, etc
+			real world example:
+				- if we have a method which takes shape as argument, then we should be able to pass circle, square, rectangle, etc
+
+	- Interface segregation
+		- client should not be forced to implement the method which it does not use rather we should segregate the interface into smaller interfaces
+		- ex:
+			- if we have a interface which has 10 methods, and client is using only 5 methods, then we should not force client to implement all 10 methods
+	- Dependency inversion
+		- high level module should not depend on low level module, both should depend on abstraction
+		- ex:
+			- if we have a class which is using another class, then we should not use concrete class, instead we should use interface
+		- computer and had disk example
+			- computer is high level module
+			- hard disk is low level module
+			- computer should not depend on hard disk, instead both should depend on abstraction
+			- computer should depend on hard disk interface
+			- hard disk should depend on hard disk interface
+
+
+- what is circuit breaker
+	- real world circuit breaker [MCB]
+		- a device which is used to protect circuits from damage due to overload or short circuit
+
+	- circuit breaker is used to detect failures
+	- prevent non-transient failures from constantly reoccurring
+	- circuit breaker is used to give fallback response when service is down or slow
+
+	circuit breaker states
+		- closed
+			- normal state
+			- all request will be passed to actual service
+		- open
+			- when failure threshold is reached, circuit breaker will be opened
+			- all request will be passed to fallback response
+		- half open
+			- after some time, circuit breaker will be half opened
+			- some request will be passed to actual service and some request will be passed to fallback response
+			- if actual service is working fine, then circuit breaker will be closed
+			- if actual service is not working fine, then circuit breaker will be opened
+
+	Rate Limiting
+	    - controls how many requests a user or client can send within a fixed period of time
+	    - prevents abuse and ensures fair use of resources
+	    - common algorithms
+	        - token bucket
+	        - leaky bucket
+	        - fixed / sliding window counter
+	Throttling
+	    - controls overall traffic to ensure system stability
+	    - either delays or rejects requests when the system load exceeds a threshold
+	    - types
+	        - user-level throttling: per-user limits
+	        - system-level throttling: based on CPU/memory usage
+	        - API Gateway throttling: enforced at the gateway level
+
+- Exception:
+	- what is exception
+		- exception is an abnormal condition which occurs during execution of program
+		- exception is recoverable
+	- what is error
+		- error is an abnormal condition which occurs during execution of program
+		- error is not recoverable
+		- error is not handled
+	- exception hierarchy
+		- throwable
+			- error
+			- exception
+				- checked exception
+				- unchecked exception
+	- checked exception
+		- system/situation error
+		- exception which is checked at compile time [known at compile time]
+		- java compiler requires that we handle checked exception
+
+		real world example:
+			- if we are driving a car, then we should wear seat belt, if we are not wearing seat belt, then we will get fine
+			- if we are driving a car, then we should have driving license, if we don't have driving license, then we will get fine
+		- ex:
+			- IOException
+			- SQLException
+	- unchecked exception
+		- user/programmer driven error
+		- exception which is not checked at compile time
+		- ex:
+			- RuntimeException
+			- NullPointerException
+			- ArrayIndexOutOfBoundsException
+			- ClassCastException
+			- IllegalArgumentException
+			- NumberFormatException
+		real world example:
+			- if we are driving a car, then we should not drive car in wrong direction, if we drive car in wrong direction, then we will get accident
+			- if we are driving a car, then we should not break traffic rules, if we break traffic rules, then we will get accident
+
+	- exception handling
+		Imagine that we order a product online, but while en-route, there’s a failure in delivery. A good company can handle this problem and gracefully re-route our package so that it still arrives on time.
+        Likewise, in Java, the code can experience errors while executing our instructions. Good exception handling can handle errors and gracefully re-route the program to give the user still a positive experience.
+
+        - rethrowing exception
+        - try-catch
+        - try-catch-finally
+
+
+- what is optional in try-catch-finally
+	- finally block will always be executed
+	- catch block will be executed only if exception occurs
+
+- final, finally, finalize
+	- final
+		- final is a keyword
+		- final is used to make variable constant
+		- final is used to make method not override
+		- final is used to make class not extendable
+	- finally
+		- finally is a block
+		- finally block will always be executed
+	- finalize
+		- finalize is a method
+		- finalize method will be called by garbage collector before destroying object
+		- finalize method is used to perform clean up activity
+
+
+- what is garbage collector
+	- a program which is used to destroy unused object from heap memory area.
+	- garbage collector is a daemon thread
+	- garbage collector is a low priority thread
+		- Young Generation: recently created, frequent mark-n-swipe
+		- Old Generation: long survived in young generation are moved to old generation, less frequent mark-n-swipe
+
+- OutOfMemoryError vs StackOverFlowError
+	- OutOfMemoryError
+		- when heap memory is full, then we will get OutOfMemoryError
+	- StackOverFlowError
+		- when stack memory is full, then we will get StackOverFlowError
+
+
+- Immutable class
+	- class whose object state can not be modified after object creation
+	- ex:
+		- String
+		- Wrapper classes
+			- Integer
+			- Double
+			- Float
+			- Long
+			- Short
+			- Byte
+			- Character
+			- Boolean
+			- BigDecimal
+			- BigInteger
+
+- Thread safety
+	- thread safety is a condition where multiple threads are able to access same object without causing any issue
+	- thread safety is achieved by using 
+		- synchronization -> Mutual Exclusion
+		- reentrant lock -> Reentrancy without releasing the lock
+		- volatile [only visibility guarantee]
+		- atomic classes
+		- concurrent collections, etc
+
+- Synchronization
+	- With synchronized, only one thread can access a shared resource at a time. This is called mutual exclusion.
+	- Read and writes operations are directly performed on main memory.
+
+- reentrant lock
+	- With ReentrantLock, a thread can access a shared resource multiple times without having to release and reacquire the lock. This is called reentrancy.
+	- ReentrantLock is a concrete implementation of the Lock interface that uses the synchronized keyword under the hood.
+
+
+- Synchronization vs Reentrant lock
+    - flexibility
+		- synchronized is not flexible
+		- reentrant lock is flexible
+	- performance
+		- synchronized is slow
+		- reentrant lock is fast
+	- control
+		- synchronized has less control
+		- reentrant lock has more flexible
+	- fairness
+		- synchronized does not provide fairness
+		- reentrant lock provides fairness
+
+- volatile [flag]
+	- With volatile, all accesses (read or write) to the volatile variable to occur to main memory,
+	effectively keeping the volatile variable out of CPU caches.
+
+- Synchronization vs volatile:
+	- volatile provide only visibility guarantee,
+	- but synchronization provide both visibility and atomicity guarantee
+
+- ConcurrentModificationException -> fail-fast
+	- when we try to modify collection while iterating, then we will get ConcurrentModificationException
+	- /add/remove while iterating collections like list, set, and map, then we will get ConcurrentModificationException.
+	- fail-fast iterator
+		- fail-fast iterator is used to detect concurrent modification
+	- fail-safe iterator
+		- fail-safe iterator is used to avoid concurrent modification
+		- fail-safe iterator will not throw ConcurrentModificationException because it works on clone copy of collection
+		- fail-safe iterator is used by concurrent collections like ConcurrentHashMap, CopyOnWriteArrayList, CopyOnWriteArraySet, etc
+
+- AtomicInteger vs Integer
+	- AtomicInteger
+		- AtomicInteger is a class
+		- AtomicInteger is used to achieve thread safety [i.e synchronized Integer]
+
+- What are the SpringBoot benefits over spring mvc
+	- auto configuration
+		- spring boot will automatically configure all the beans
+	- starter dependency [version compatibility management]
+    		- spring-data-jpa
+    		- spring-web
+    - transitive dependency-management
+      	    - resolved version compatibility issues
+	- embedded server
+		- spring boot will automatically configure embedded server
+	- actuator
+		- actuator is used to monitor application
+		- actuator is used to monitor
+			- beans
+			- threads
+			- memory
+			- cpu
+			- health
+			- metrics
+			- etc
+	- deployment
+		- create war file then deploy in server
+		- executable jar file
+	- IoC
+	    - Spring IoC container is used to manage beans
+
+- Inversion of control
+	- control of the object(bean) creation and dependency injection is inverted to container
+	- Inversion of control is a design principle in which the control of object creation and dependency injection is inverted to a container or framework.
+- Dependency Injection
+	- dependency injection is used to achieve loose coupling
+
+- Spring bean life cycle
+	- bean scope
+		- singleton
+			- only one instance will be created per IOC container
+		- prototype
+			- new instance will be created for each request from IOC container
+		- request
+			- A new bean instance per HTTP request.
+		- session
+			- One bean instance per user HTTP session.
+		- global session
+			- new instance will be created for each global session
+
+	- bean life cycle
+		- bean instantiation
+		- populate properties
+		- BeanPostProcessor
+		- bean initialization
+		- bean destruction
+
+- Thread lifecycle
+	- new
+	- runnable
+	- running
+	- waiting (sleep, wait, join)
+	- terminated
+
+
+- Java 8 new feature
+	- Functional Interface
+		- interface which expresses single functionality
+		- interface which has only one abstract method
+		- ex:
+			- Runnable
+			- Callable
+			- Comparable
+			- Comparator
+			- Consumer
+			- Supplier
+			- Predicate
+			- Function
+
+	- lambda expression
+		- lambda expression is used to provide implementation of functional interface with anonymous class
+	- Stream:
+		- stream is a sequence of elements
+	- stream API
+		- map/reduce/filter/collect
+	- default method
+		- default method is used to provide default implementation in interface
+	- static method
+		- static method is used to provide static method in interface
+	- method reference
+		- when a lambda expression is only calling a method, then we can replace lambda expression with method reference.
+		- method reference is used to refer static method
+	- forEach
+		- earlier we used to iterate collection using for loop or iterator
+		- forEach is used to iterate collection
+	- Optional
+		- Optional is used to avoid NullPointerException
+		- Optional is container which may contain zero or one object.
+	- Date and Time API
+		- java.time package
+		- Local and Zoned Date and Time
+
+- ArrayList internal implementation with code
+
+- HashMap internal implementation with code
+
+- LRU cache implementation with code

@@ -1,0 +1,26 @@
+MMT
+---
+
+Q- Given string num representing a non-negative integer num, and an integer k, return the smallest possible integer after removing k digits from num.
+
+Input: num = "1432219", k = 3
+Output: "1219"
+digits = 1, 4, 3, 2, 2, 1, 9
+ give another example
+Input: num = "10200", k = 1
+Output: "200"
+digits = 1, 0, 2, 0, 0
+
+Input: num = "10", k = 2
+Output: "0"
+
+Explanation: Remove the three digits 4, 3, and 2 to form the new number 1219 which is the smallest.
+
+Q- stock buy n sell to make max_profit
+	- you're allowed to buy n sell once
+	- you're allowed to buy n sell any time
+	- you're allowed to buy n sell only 2 times
+Input: arr[] = {100, 180, 260, 310, 40, 535, 695}
+Output: 695-535
+Output: 865
+Output: 865

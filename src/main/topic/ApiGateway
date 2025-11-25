@@ -1,0 +1,49 @@
+forward-proxy:
+	when delegate client's task
+	ex: child-parent, attendance-proxy
+	protect/save the client from servers
+	ex: Intranet connecting to internet, forticlient n zscaler
+	benefits:
+		- firewall
+		- security
+		- better management
+		- caching (static content for same request from multiple node)
+		- encryption and decryption
+
+reverse-proxy:
+	when delegate server's task
+	protect the servers from client
+	ex: nginx
+	benefits:
+        - firewall
+        - API gateway
+        - security/authentication
+		- load-balancer
+        - caching (static content for same request from multiple node)
+        - encryption and decryption
+		- better management
+
+
+API:
+	APIs act as the "interaction interface/point" to an backend applications/program to access data, business logic, or functionality from your backend services.
+
+API_GATEWAY:
+	An API gateway can be think as front-door that sits between a client and a collection of APIs.
+	it is an example of reverse-proxy
+	ex: nginx
+	benefits:
+        - firewall: 
+			allow/block incoming/outgoing traffic based on security rules. ex: esNginx doesn't allow indices creation/deletion
+        - rate limiter
+        - load-balancer
+        - caching (static content for same request from multiple node)
+        - analytics and monitoring or billing
+        - encryption and decryption
+
+	use-cases:
+		You want to protect your APIs from 'overuse and abuse', so you use an authentication service and rate limiting.
+	    You want to 'understand how people use your APIs', so you’ve added analytics and monitoring tools.
+	    If you have 'monetized APIs', you’ll want to connect to a billing system.
+	    You may have adopted a 'microservices architecture', in which case a single request could require calls to dozens of distinct applications.
+	    Over time you’ll 'add some new API services and retire others', but your clients will still want to find all your services in the same place.
+	    You want to response in defined time-frame. SLA(ttl)

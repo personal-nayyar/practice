@@ -1,0 +1,156 @@
+Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.
+The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency
+of at least one of the chosen numbers is different.The test cases are generated such that the number of unique combinations that sum up to target is less than 150 combinations for the given input.
+
+Example 1:
+Input: candidates = [2,3,6,7], target = 7
+Output: [[2,2,3],[7]]
+Explanation:
+2 and 3 are candidates, and 2 + 2 + 3 = 7. Note that 2 can be used multiple times.
+7 is a candidate, and 7 = 7.
+These are the only two combinations.
+backtracking
+
+Example 2:
+Input: candidates = [2,3,5], target = 8
+Output: [[2,2,2,2],[2,3,3],[3,5]]
+Example 3:
+Input: candidates = [2], target = 1
+Output: []
+
+----------------------------------------------------------------problem 2----------------------------
+
+Problem 3
+There are n gas stations along a circular route, where the amount of gas at the ith station is gas[i].
+You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from the ith station to its next (i + 1)th station. You begin the journey with an empty tank at one of the gas stations.
+Given two integer arrays gas and cost, return the starting gas station's index if you can travel around the circuit once in the clockwise direction, otherwise return -1. If there exists a solution, it is guaranteed to be unique
+
+Example 1:
+Input: gas = [1,2,3,4,5], cost = [3,4,5,1,2]
+Output: 3
+Explanation:
+Start at station 3 (index 3) and fill up with 4 unit of gas. Your tank = 0 + 4 = 4
+Travel to station 4. Your tank = 4 - 1 + 5 = 8
+Travel to station 0. Your tank = 8 - 2 + 1 = 7
+Travel to station 1. Your tank = 7 - 3 + 2 = 6
+Travel to station 2. Your tank = 6 - 4 + 3 = 5
+Travel to station 3. The cost is 5. Your gas is just enough to travel back to station 3.
+Therefore, return 3 as the starting index.
+
+Example 2:
+Input: gas = [2,3,4], cost = [3,4,3]
+Output: -1
+Explanation:
+You can't start at station 0 or 1, as there is not enough gas to travel to the next station.
+Let's start at station 2 and fill up with 4 unit of gas. Your tank = 0 + 4 = 4
+Travel to station 0. Your tank = 4 - 3 + 2 = 3
+Travel to station 1. Your tank = 3 - 3 + 3 = 3
+You cannot travel back to station 2, as it requires 4 unit of gas but you only have 3.
+Therefore, you can't travel around the circuit once no matter where you start.
+
+
+-------------------------------------------------------Data streaming---------------------
+Problem 1
+
+You're tasked with optimizing a data streaming pipeline that experiences latency issues.
+The system processes data from Kafka into Spark Streaming for real-time analytics.
+Identify potential bottlenecks and propose optimizations to reduce latency while ensuring data consistency.
+1. consumer group and partition configuration
+    - number of consumer-group/thread
+    - number of partition
+2. Network latency
+    - deploy kafka broker and spark streaming cluster within same data center or region
+    - adjust buffer size and bandwidth
+3. Serialize and deserialize data
+    - use proper serialization format like avro, parquet to reduce data size.
+4. Spark-streaming configuration
+    - batch interval
+    - number of executor
+    - executor memory
+    - parallelism setting
+5.  data consistency
+    - idempotent producer
+    - exactly once acknowledgement
+
+
+Problem 2
+Implement a scenario where you need to perform a stream-stream join between two continuously updating streams of events in Kafka and process the joined data in Spark Streaming.
+Discuss the challenges and approaches to accomplish this efficiently.
+
+Problem 3
+In a Flink-based streaming application, explain how Flink achieves fault tolerance and manages state in the event of failures. Discuss the mechanisms and strategies used to handle stateful stream processing.
+
+Problem 4
+Discuss the differences between event time and processing time in data streaming applications. How does each affect windowed aggregations in systems like Kafka Streams, Spark Streaming, or Flink?
+
+Problem 5
+Compare tumbling, sliding, and session windowing strategies in the context of data streaming. Explain their advantages, use cases, and limitations in different streaming frameworks.
+------------------------------------------------------------------------------
+
+
+ACID Properties: Explain the ACID properties in the context of databases. How do they ensure data integrity in transactions?
+Property                                Ensures                                           Example
+Atomicity                       All-or-nothing execution                        Debit and credit both succeed or both fail
+Consistency                     Valid data state maintained                     Constraints always satisfied
+Isolation                       No transaction interference                     Each transaction runs as if alone
+Durability                      Changes persist after commit                    Data survives crash
+
+Normalization vs. De-normalization: Compare and contrast normalization and de-normalization in databases. When would you prefer one over the other?
+--------------------------------------------------------------------
+Aspect             | Normalization                          | De-normalization
+---------------------------------------------------------------
+Purpose            | Reduce data redundancy by defining rel | Improve read performance,
+                   | ensure data integrity                  | reduce joins
+---------------------------------------------------------------
+Data Storage       | Splits data into multiple              | Combines data into fewer
+                   | related tables                         | tables
+---------------------------------------------------------------
+Redundancy         | Minimizes redundancy                   | Introduces controlled
+                   |                                        | redundancy
+---------------------------------------------------------------
+Performance        | Slower reads (more joins)              | Faster reads (fewer joins)
+---------------------------------------------------------------
+Update Cost        | Easier updates, consistent data        | Harder updates, risk of
+                   |                                        | inconsistency
+---------------------------------------------------------------
+Use Case           | OLTP systems (transaction-heavy)        | OLAP systems (reporting,
+                   |                                         | analytics)
+---------------------------------------------------------------
+	•	✅ Normalize → when data integrity and consistency matter most.
+	•	✅ De-normalize → when read speed and query performance are priorities.
+
+Indexing: Describe the significance of indexing in databases. How does indexing affect query performance?
+Indexing in databases creates a data structure (like a book index) that allows faster data retrieval without scanning the entire table.
+	•	Significance: Improves query speed by enabling quick lookups on columns used in WHERE, JOIN, or ORDER BY clauses.
+	•	Effect on Performance:
+	•	✅ Faster reads (queries execute quicker)
+	•	⚠️ Slower writes (inserts/updates/deletes take longer as indexes must be updated)
+
+
+docker and kubernetes
+-------------------
+Docker:
+Docker Image vs. Container: Explain the difference between a Docker image and a container. How are they related?
+Docker Volumes vs. Bind Mounts: Compare Docker volumes and bind mounts. When would you use one over the other?
+Docker Networking: Describe different types of Docker networking modes and their use cases (e.g., bridge, host, overlay).
+
+Problem 3
+Kubernetes:
+Pods vs. Deployments: Differentiate between Kubernetes pods and deployments. How are they related in managing containerized applications?
+Kubernetes Services: Explain the role of Kubernetes services in facilitating communication between various parts of an application.
+Horizontal vs. Vertical Scaling: Discuss horizontal and vertical scaling in the context of Kubernetes. When would you choose one over the other?
+Rolling Updates and Rollbacks: Describe how Kubernetes handles rolling updates and rollbacks for applications. What are the advantages of these mechanisms?
+
+🐳 Docker
+	•	What it is: A platform to build application as package, and run applications in containers.
+	•	Purpose: Ensures software runs the same way across different environments.
+	•	Key idea: “Package once, run anywhere.”
+	•	Example: You create a Docker image for your app → run it as a container on any machine.
+
+⸻
+
+☸️ Kubernetes (K8s)
+	•	What it is: A container orchestration platform that manages many Docker containers across multiple machines.
+	•	Purpose: Automates deployment, scaling, load balancing, and recovery of containers.
+	•	Key idea: “Manages containers in production at scale.”
+	•	Example: If one container crashes, Kubernetes automatically replaces it.

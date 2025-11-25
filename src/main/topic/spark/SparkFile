@@ -1,0 +1,139 @@
+Spark:
+	- Distributed data processing/computing framework
+	- open-source
+	- in-memory(fast)
+	- fault-tolerant (RDD, DAG lineage)
+	- lazy-evaluation (DAG of transformation, action triggers execution)
+	- advanced-analytics
+		- stream-processing -> incoming transactional data -> micro-batch ->
+		- SQL-processing -> structured data -> dataframe/dataset
+		- batch-processing
+		- machine-learning
+        - graph-processing
+
+spark-components:
+	spark-core:
+		spark-engine, RDD etc.
+	spark-sql:
+	    (structured-data operations) SQL, dataframe, dataset etc.
+	spark-streaming:
+		stream-data operations
+	spark-MLlib:
+		machine-learning lib
+	GraphX:
+		connected component data processing like facebook connection, linkedIn connection etc.
+
+RDD:
+	- Resilient Distributed Dataset
+    Data (500MB) -> Distributed Data (500MB)
+        - Partition_1 (128MB) -> Task_1 (Node_1)
+        - Partition_2 (128MB) -> Task_2 (Node_2)
+        - Partition_3 (128MB) -> Task_3 (Node_2)
+        - Partition_4 (128MB) -> Task_4 (Node_3)
+	- RDD is a collection of partitioned data (distributed across nodes)
+	- immutable (read-only)
+	- fault-tolerant : lineage (DAG of transformations)
+	- lazy-evaluation
+	- in-memory(fast)
+	- parallel processing
+
+RDD-operations:
+	- Transformation: lazy evaluation (return new RDD)
+		- map
+		- flatMap
+		- filter
+		- distinct
+		- sample
+		- union
+		- intersection
+	- Action: trigger execution (return result)
+		- reduce
+		- collect
+		- count
+
+DAG:
+	- Directed Acyclic Graph
+	- DAG is a logical representation of RDD operations.
+	- DAG is created when a RDD is created.
+	- DAG is executed when a action is performed.
+
+RDD vs Dataframe vs DataSet
+	RDD:
+		- Resilient Distributed Dataset
+		- immutable
+		- fault-tolerant
+		- lazy-evaluation
+		- in-memory(fast)
+		- parallel processing
+	Dataframe:
+		- structured data
+		- immutable
+		- fault-tolerant
+		- lazy-evaluation
+		- in-memory(fast)
+		- parallel processing
+	DataSet:
+		- structured data
+		- immutable
+		- fault-tolerant
+		- lazy-evaluation
+		- in-memory(fast)
+		- parallel processing
+		- type-safe
+
+spark-architecture:
+	- Driver:
+		- DAGScheduler
+		- TaskScheduler
+		- SchedulerBackend
+		- BlockManager
+		- SparkContext
+	- Worker/Executor:
+		- Executor
+		- BlockManager
+		- TaskScheduler
+		- SchedulerBackend
+		- Worker
+	cluster manager:
+
+
+spark-cluster:
+	- Standalone
+	- YARN : Hadoop cluster manager
+	- Mesos
+
+	Drivers   ----> Cluster Manager <----> Workers
+
+spark deployment-mode
+	- client-mode
+		- driver runs on edge node where spark-submit launches
+	- cluster-mode
+		- driver runs on any worker node
+
+
+spark vs hadoop(mapReduce):
+ parameter                  Hadoop-MapReduce                    Spark
+ performance                slow                                faster(100x on memory, 10x on disk)
+ cost                       relative less expensive(need disk)  expensive (Need RAM to run in-memory)
+ processing                 batch                               batch, stream processing, graph, SQL processing
+ real-time-analytics        No (Batch process only)             Yes (Batch and stream processing)
+ fault-tolerance            Yes                                 Yes
+ easy to use                No                                  relative easy to use.
+ scalability                Yes                                 Yes
+
+YARN:
+	- Cluster Resource Management tool in Hadoop/spark
+
+spark-streaming:
+ - continuous stream processing of data
+ Kafka  ------> Spark-Streaming  ------>  HDFS/DB
+ Kafka -----> Dstream(micro-batches of X sec) -----> RDD -----> Dstream -----> HDFS/DB
+
+Persistent level in spark
+	- MEMORY_ONLY (default)
+	- MEMORY_AND_DISK
+	- MEMORY_ONLY_SER
+	- MEMORY_AND_DISK_SER
+	- DISK_ONLY
+	- OFF_HEAP
+

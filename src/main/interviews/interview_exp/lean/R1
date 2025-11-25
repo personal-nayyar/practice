@@ -1,0 +1,43 @@
+- why String class is immutable
+   - Security
+   - String pool
+   - Thread-safety
+   - Hashed (Stable)
+
+- dependency injection, why, how is it used in spring boot
+    - rather than creating dependency object itself rather ask what you need.
+
+    - What if two bean of same name
+        - @Qualifier("name"), @Primary
+    - why constructor injecting/autowiring is preferred
+    Type                        Pros                            Cons
+    Constructor Injection       Immutable, testable, explicit   Slightly more boilerplate
+    Field Injection             Quick and concise               Harder to test, hides dependencies
+    Setter Injection            Good for optional dependencies  Allows mutable state
+
+ AOP:
+    common-module aspect (part of multiple modules) separated from the core business logic
+    - ex: logging, transaction-management, ,validation/authentication ,profiling
+
+- micro service advantage and disadvantage
+    Advantages of Microservices:
+    	•	Enables independent development, deployment, and scaling of services.
+    	•	Improves fault isolation—failure in one service doesn’t crash the whole system.
+    	•	Allows use of different technologies for different services.
+    	•	Enhances team productivity by letting teams work autonomously.
+
+    Disadvantages of Microservices:
+    	•	Complex to manage due to many moving parts and inter-service communication.
+    	•	Difficult debugging and monitoring across distributed services.
+    	•	Data consistency becomes harder to maintain.
+    	•	Higher operational overhead with multiple deployments and CI/CD pipelines.
+    In essence: Microservices offer flexibility and scalability but demand careful design, monitoring, and management to handle their complexity.
+
+- why can't we scale RDBMS like NoSQL
+    In brief:
+        •	RDBMS follows ACID properties and joins, which make horizontal scaling (sharding) difficult.
+        •	Data is tightly structured and relationships are enforced across tables, so distributing data across multiple servers breaks consistency.
+        •	NoSQL, on the other hand, sacrifices some consistency for flexibility and partition tolerance, making it easier to scale horizontally by adding more nodes.
+
+    In short: RDBMS is optimized for consistency and structure; NoSQL is optimized for scalability and flexibility.
+

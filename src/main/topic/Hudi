@@ -1,0 +1,15 @@
+Hudi:(Hadoop upsert delete incrementals)
+	data processing platform
+	key feature of hudi to perform upsert on large dataset
+	hudi create delta file and merge them with actual data
+	transactional support like Record-level insert, update, and delete
+	when to use: frequent updates, simplify incremental data processing [just like inset, updates, delete]
+
+copy-on-write: dataFile+delta-log-file -> new file version(v2) at the moment
+merge-on-read: dataFile+delta1+delta2+delta3+delta4(whatever commit you have configure) -> new file
+	ro: read optimised
+	rt: realtime update
+
+Snapshot-query: provide snapshot data based on storage path (using parquet+avro data)
+incremental-query: provide change stream record on basis of commit time.
+read-optimised-query: excellent snapshot query based on columnar data(parquet) only.

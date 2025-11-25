@@ -1,0 +1,149 @@
+🔹 Spark Interview Q&A Revision Guide
+
+1. Basics
+
+1. What is Apache Spark, and how is it different from Hadoop MapReduce?
+👉 Spark is a distributed computing framework, faster than MapReduce due to in-memory processing and DAG execution.
+
+2. What are RDDs (Resilient Distributed Datasets)?
+👉 Immutable, fault-tolerant, distributed collections of objects; core abstraction in Spark.
+
+3. Advantages of Spark?
+👉 Speed (in-memory),
+ fault tolerance,
+ support for SQL, ML, streaming, and graph processing,
+ easy APIs (Java, Scala, Python, R),
+
+4. Components of Spark?
+👉 Spark Core, Spark SQL, Spark Streaming, MLlib (machine learning), GraphX (graph processing).
+
+5. Difference between RDD, DataFrame, and Dataset?
+👉 RDD = low-level, untyped, functional API.
+👉 DataFrame = tabular, optimized, schema-aware.
+👉 Dataset = strongly typed (Scala/Java), combines benefits of RDD + DataFrame.
+
+JavaRDD<String> lines = sc.textFile("data.txt");
+JavaRDD<Integer> lengths = lines.map(String::length);
+
+Dataset<Row> df = spark.read().json("people.json");
+df.select("name", "age").where("age > 25").show();
+
+Dataset<Person> ds = spark.read().json("people.json").as(Encoders.bean(Person.class));
+ds.filter(p -> p.getAge() > 25).show();
+
+⸻
+
+2. RDD & Transformations
+
+6. Transformations vs Actions?
+👉 Transformations (lazy, return new RDD, e.g. map, filter), Actions (trigger execution, return result, e.g. collect, count).
+
+7. Lazy evaluation?
+👉 Spark builds a DAG of transformations and executes only when an action is called.
+
+8. Narrow vs Wide transformations?
+👉 Narrow = no shuffle (e.g. map, filter).
+👉 Wide = needs shuffle across partitions (e.g. groupByKey, reduceByKey).
+
+9. Data partitioning?
+👉 Spark splits data into partitions distributed across cluster nodes.
+
+10. Optimize partitions?
+👉 Use repartition() (increase partitions), coalesce() (decrease partitions), and tune partition count based on data size & cluster resources.
+
+⸻
+
+3. Spark Architecture
+
+11. Spark architecture components?
+👉 Driver (coordinates job), Executors (run tasks), Cluster Manager (YARN, Mesos, Kubernetes, Standalone).
+
+12. Fault tolerance?
+👉 Spark uses lineage info to recompute lost partitions + replication in memory.
+
+13. Lineage in Spark?
+👉 DAG of transformations that tells Spark how to recompute lost data.
+
+14. Spark memory management?
+👉 Divided into execution memory (caching, shuffles) and storage memory (RDD cache, broadcast).
+
+15. DAG in Spark?
+👉 Directed Acyclic Graph of stages and tasks Spark generates before execution.
+
+⸻
+
+4. Spark SQL & DataFrames
+
+16. Spark SQL vs Hive?
+👉 Spark SQL runs queries faster with Catalyst optimizer; Hive uses MapReduce (slower).
+
+17. Creating DataFrame?
+👉 From RDD (spark.createDataFrame(rdd)), from file (spark.read.json/parquet/csv), from table.
+
+18. Catalyst Optimizer?
+👉 Query optimizer in Spark SQL: does logical & physical plan optimization.
+
+19. Tungsten?
+👉 Project for memory & code generation optimizations (off-heap, whole-stage codegen).
+
+20. cache() vs persist()?
+👉 cache() = shorthand for persist(MEMORY_ONLY).
+👉 persist() = allows custom storage levels.
+
+⸻
+
+5. Performance & Optimization
+
+21. Handle data skew?
+👉 Use salting, repartitioning, broadcast joins, avoiding wide shuffles.
+
+22. Techniques to optimize jobs?
+👉 Use partitioning, caching, broadcast variables, reduce shuffles, predicate pushdown.
+
+23. Predicate pushdown?
+👉 Filter conditions are pushed to the data source level (e.g. Parquet, ORC) → less data read.
+
+24. Broadcast join?
+👉 Small dataset is broadcast to all executors → avoids shuffle for large joins.
+
+25. Shuffle in Spark?
+👉 Re-distribution of data across partitions during wide transformations; costly operation.
+
+⸻
+
+6. Advanced & Real-time
+
+26. Spark Streaming vs Structured Streaming?
+👉 Old Spark Streaming = DStreams (micro-batch).
+👉 Structured Streaming = DataFrame/Dataset API, unified batch + streaming.
+
+27. Checkpointing in Streaming?
+👉 Saves metadata + RDDs to storage (HDFS, S3) for fault tolerance & recovery.
+
+28. Watermarks in Structured Streaming?
+👉 Allow late data by defining how long Spark waits before discarding old state.
+
+29. Role of Kafka in Spark Streaming?
+👉 Kafka is a source for real-time data ingestion into Spark Streaming.
+
+30. Exactly-once processing in Structured Streaming?
+👉 Achieved via idempotent sinks + checkpointing + transactional writes (e.g. Kafka, Delta Lake).
+
+⸻
+
+7. Coding & Scenarios
+
+31. Count unique users per day?
+👉 Use groupBy(date, user).count() → then distinct().count().
+
+32. Join two large datasets efficiently?
+👉 Use broadcast() for smaller dataset or partitioned join.
+
+33. Top 10 error messages from logs?
+👉 rdd.filter(_.contains("ERROR")).map((msg,1)).reduceByKey(_+_).takeOrdered(10)(Ordering.by(-_._2)).
+
+34. Handle out-of-memory errors?
+👉 Increase executor memory, optimize partitions, persist with disk, avoid wide shuffles.
+
+35. Debugging slow job?
+👉 Check DAG in Spark UI, look for skew, optimize joins, repartition, cache where needed, use predicate pushdown.

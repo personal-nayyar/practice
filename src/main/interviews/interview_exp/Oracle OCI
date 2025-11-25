@@ -1,0 +1,44 @@
+Oracle OCI
+---------
+Q: find the number of subarray with given sum
+    variants:
+        subarray with the given sum (all positive)
+        subarray with the given sum (handle negative)
+        count subarray with the given sum
+        largest subarray with given sum
+        largest subarray with sum = 0
+        largest subarray with sum closest to 0
+(i) find the number of subarray with given sum
+ex: [1,2,3,4,5] sum = 5
+ans: 2
+explanation: [2,3] and [5]
+ex: [1,2,3,4,5] sum = 6
+ans: 1
+explanation: [1,2,3]
+ex: [1,2,3,4,5] sum = 10
+ans: 0
+explanation: no subarray with sum 10
+
+
+OCI R1
+------
+Q: implement split wise
+(i) add userSplitWise
+(ii) add expense
+(iii) expense should be divided exact equally among userSplitWises
+(iv) expense should be dividable via % or amount
+
+OCR R2
+------
+design Reddit system
+(i) show trending feed and subscribe feed
+(ii) create feed group
+(iii) manage userSplitWise
+(iv) create post
+(v) create comment
+(vi) upvote/downvote
+
+OCR R3
+------
+implement LRU cache
+rotten orange coding prob

@@ -1,0 +1,77 @@
+Flipkart Minutes – Quick Commerce System
+Description
+Implement the core system for Flipkart Minutes, Flipkart’s instant delivery platform, enabling
+customers to order any item for delivery within minutes. The system should efficiently manage
+customers, delivery partners, and orders, ensuring rapid and reliable fulfillment.
+
+Core Requirements
+1. Onboarding
+● The system should support onboarding of new customers and delivery partners.
+2. Order Placement & Cancellation
+● Customers can place orders for any item (item name or ID is specified in the order).
+● There are no in-stock/out-of-stock constraints; all items are always available.
+● Customers can cancel orders if they have not yet been picked up by a delivery partner.
+3. Order Assignment & Fulfillment
+● Orders are auto-assigned to any available delivery partner.
+● If no delivery partner is available, the order remains in a queue and is assigned as soon
+as a partner becomes free.
+● Each delivery partner can handle only one order at a time.
+● The number of ongoing orders can exceed the number of delivery partners (orders may
+queue).
+● Delivery partners can pick up assigned orders and mark them as delivered.
+● Canceled orders should not be assigned to a delivery partner
+● If an assigned order gets canceled before pickup, the delivery partner should become
+available for other orders
+● Once a delivery partner picks up an order, the order cannot be canceled by the customer
+or the system.
+● Assume delivery partners are available 24x7. Ignore travel time.
+4. Status Tracking
+● The system should provide real-time status for orders and delivery partners.
+5. Concurrency & Thread Safety
+● The system must be thread-safe and handle all concurrency scenarios (multiple
+customers and partners acting simultaneously).
+
+Bonus Features
+● Notifications: Notify customers and delivery partners (via simulated logs) on order
+status changes.
+● Ratings: Customers can rate delivery partners after successful delivery.
+● Dashboard: Show top delivery partners based on number of deliveries and ratings.
+● Auto-cancel: If no delivery partner picks up the order within 30 minutes of its creation,
+the order should be canceled automatically regardless of whether an order has been
+assigned to a delivery partner or not
+
+Guidelines:
+● Time: 120 mins (Implementation).
+● Write modular, clean and demo-able code (Test cases or runtime execution).
+● A driver program/main class/test case is needed to test out the code by the
+evaluator with multiple test cases.
+● Use design patterns wherever applicable.
+● Please handle concurrency wherever applicable.
+● Evaluation criteria: Demoable & functionally correct code, Code readability, Proper
+Entity modeling, Modularity & Extensibility, Separation of concerns, Abstractions,
+Exception Handling, Code comments.
+● Code should handle edge cases properly and fail gracefully.
+● You are not allowed to use any external databases like MySQL. Use only in-memory
+data structures.
+● No need to create any UX or any HTTP API. It should be a standalone application.
+● Usage of any AI powered tools such a chatGPT or github-copilot is strictly prohibited.
+You may use the internet to look up any syntactic references.
+● You are free to use any popular programming language of your choice.
+● The bonus features are optional. Attempt them only after finishing the p0 features.
+● The problem may require you to make certain assumptions. Do make reasonable
+assumptions and convey them to the review panel.
+
+Sample Test cases:
+The input/output need not be in the same format this is for explaining the expected functionality
+i: input
+o: output
+
+● onboard customer - customer_id, name
+● onboard delivery_partner - partner_id, name
+
+● create order - customer_id, item_name
+● cancel order - order_id
+● show order status - (order_id)
+● show delivery partner status - (partner_id)
+● pick up order - (partner_id, order_id)
+● complete order - (partner_id, order_id)

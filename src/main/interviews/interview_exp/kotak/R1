@@ -1,0 +1,16 @@
+project explanation -> how impact full is your project [what problem is it solving about merchant and how]
+Previously, merchants had fragmented data from multiple sources like payments, customers, and settlements,
+making it difficult to understand trends, identify high-value customers, or detect operational inefficiencies.
+
+Our solution provided a centralized analytics dashboard that aggregated and processed large volumes of transaction and behavioral data in near real time.
+It enabled merchants to view sales trends, customer segmentation, payment success rates, and industry comparisons — all through an intuitive interface.
+From an impact perspective:
+	•	It empowered thousands of merchants to make data-driven decisions, improving customer retention and revenue visibility.
+	•	The system’s performance optimizations and modular redesign improved scalability and reduced operating costs by 40%.
+
+verticals:
+    PaymentSource_Analytics         SuccessRate_Analytics           Customer_Segmantation_Analytics          Industry (Comparison)  vs You
+
+HLD of bookMyShow
+    -> more focus on how would you hold (temporary) seat for user when user select some seat and proceed to checkout
+    -> how would you confirm those hold seat once booking is confirmed

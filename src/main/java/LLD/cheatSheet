@@ -1,0 +1,8 @@
+Steps:
+    1. Entity/core class creation
+        1.1 check their operations and responsibilities
+    2. interface declaration
+    3. interface implementation (Desgin: Repository(SRP), Strategy(OCP), Factory(LSP), Builder, Service class (DIP))
+    4. integrate design patter (Factory, Builder, Singleton, etc.)
+    5. Main Service class
+    6. Usage Example Demo/Runner

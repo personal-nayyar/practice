@@ -1,0 +1,718 @@
+R1:
+Different memory area in java
+
+| Memory Area          | Stores                                          | Thread-Specific? | Garbage Collected? |
+|----------------------|------------------------------------------------|------------------|--------------------|
+| Method Area         | Class metadata, static variables,method bytecode| No (Shared)      | No                 |
+| Heap                | Objects, String constant pool                   | No (Shared)      | Yes                |
+| Stack               | Method execution, local variables               | Yes              | No                 |
+| PC Register         | Current execution address                       | Yes              | No                 |
+| Native Method Stack | Native method calls                             | Yes              | No                 |
+
+ Memory-error in java
+ - outOfMemoryError
+	- heap area full
+	- occurs:
+		- memory leak - allocating too many objects but not releasing it
+		- insufficient heap size configured for memory intensive application
+		ex:
+			while(true){
+				new Object();
+			}
+
+- stackOverflowError
+	- stack area full
+	- occurs:
+		- infinite recursion
+		- too many method calls
+	ex:
+		public static void main(String[] args){
+			main(args);
+		}
+
+Exception:
+	- abnormal condition that disrupts the normal flow of program execution
+	- checked exception
+		- checked at compile time
+		- compiler enforces to handle the exception either by try-catch or throws
+		- ex: IOException
+	-unchecked exception
+		- runtime exception
+		- ex: ArithmeticException
+
+when to create custom exception?
+	- exception specific to our application not present in java
+	- ex: InsufficientFundsException
+
+how to create custom exception?
+	- create a class that extends Exception class
+	- create a constructor that accepts String message
+	- call super(message) in the constructor
+	- ex:
+		public class InsufficientFundsException extends Exception{
+			public InsufficientFundsException(String message){
+				super(message);
+			}
+		}
+
+when to extend checked exception?
+	- when you enforce the calling method to handle it explicitly
+	- ex:
+		public void withdraw(double amount) throws InsufficientFundsException{
+			if(amount > balance){
+				throw new InsufficientFundsException("Insufficient funds");
+			}
+			balance -= amount;
+		}
+when to extend unchecked exception?
+	- when you don't enforce the calling method to handle it explicitly
+	- ex:
+		public void withdraw(double amount){
+			if(amount > balance){
+				throw new InsufficientFundsException("Insufficient funds");
+			}
+			balance -= amount;
+		}
+	- calling method can handle it explicitly if it wants to
+	- ex:
+		try{
+			account.withdraw(100);
+		}catch(InsufficientFundsException e){
+			System.out.println(e.getMessage());
+		}
+
+Different data structure in java
+- Array
+- List
+    - LinkedList, Deque
+- Queue
+    - MinHeap
+    - MaxHeap
+    - PriorityQueue
+- Stack
+- Set
+- Map
+- Tree
+- Graph
+
+LinkedList implementation in java
+- doubly linked list
+- implements List, Queue, Deque interfaces
+- not synchronized | Not thread-safe
+- null elements are allowed
+- maintains insertion order
+- faster insertion and deletion
+- slower access
+
+ReST APId
+- standard way of building web endpoints
+- Service to service sync communication
+- HTTP protocol
+- json or xml for data exchange
+
+
+REST API standards
+- client-server architecture
+- uniform interface
+- stateless
+- cacheable
+- layered system
+- code on demand (optional)
+
+ReST API methods
+- GET - read
+- POST - create
+- PUT - replace
+- PATCH - update (patching activity)
+- DELETE - delete
+
+
+Rest API to add an item to the shopping cart
+- POST /cart/items - add an item to the cart
+- POST /cart/items/{id} - update an item in the cart
+- GET /cart/items - get all items in the cart
+- GET /cart/items/{id} - get an item in the cart
+- DELETE /cart/items/{id} - delete an item in the cart
+- DELETE /cart/items - delete all items in the cart
+- PUT /cart/items - replace all items in the cart
+- PUT /cart/items/{id} - replace an item in the cart
+- PATCH /cart/items - update all items in the cart
+- PATCH /cart/items/{id} - update an item in the cart
+
+difference between PUT and PATCH and POST in REST API
+- POST - create a new resource
+- PUT - replace all fields in the resource
+- PATCH - update only the specified fields in the resource
+
+REST Status Codes
+- 1xx - informational
+	- 100 - continue
+	- 101 - switching protocols
+- 2xx - success
+	- 200 - OK
+		- request processed successfully
+	- 201 - created
+	- 202 - accepted
+		- request accepted but not processed
+	- 204 - no content
+		- request processed but no content returned
+- 3xx - redirection
+	- 301 - moved permanently
+	- 307 - temporary redirect
+- 4xx - client error
+	- 400 - bad request
+	- 401 - unauthenticated
+		- authentication failed  - identity not verified
+	- 403 - forbidden
+		- authentication successful but authorization failed - identity verified but permission denied
+	- 404 - not found
+	- 405 - method not allowed
+- 5xx - server error
+	- 500 - internal server error
+	- 502 - bad gateway: gateway(server) received an invalid response from upstream server [communication error]
+	- 503 - service unavailable: Server itself is not available to process request [Server overloaded, maintenance activity]
+	- 504 - gateway timeout: gateway(server) didn't receive a response from upstream server within a specified time
+	- 505 - HTTP version not supported
+
+when we encounter 401 or 403  error?
+- when we try to access a resource without authentication
+- when we try to access a resource without authorization
+
+how to handle 401 or 403 error?
+401
+- redirect to login page
+- redirect to error page
+403
+- redirect to home page
+- redirect to access denied page
+
+how to provide authentication in REST API?
+- spring web security
+	- public endpoints - login/authentication api
+	- private endpoints - requires authentication
+- jwt authentication
+	- jwt secret key
+	- jwt token
+		- header
+			- algorithm
+			- type
+		- payload
+			- issuer
+			- subject
+			- expiration
+			- audience
+			- custom claims
+		- signature
+			- base64 encoded header
+			- base64 encoded payload
+			- secret key
+			- algorithm
+	- add jwt authentication filter before username/password authentication filter
+		- extract jwt token from request header
+		- validate jwt token
+		- extract username from jwt token
+		- ex:
+			public class JwtAuthenticationFilter extends OncePerRequestFilter{
+				@Override
+				public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain){
+					String jwtToken = request.getHeader("Authorization");
+					if(jwtToken != null){
+						//validate jwt token
+						//set authentication in security context
+					}
+					chain.doFilter(request, response);
+				}
+			}
+
+Transaction in spring Boot
+@Transactional: Initialize a transaction context
+- @Transactional - method level
+- @Transactional(propagation = Propagation.REQUIRED) - method level // default
+	- if transaction exists, use it
+- @Transactional(propagation = Propagation.REQUIRES_NEW) - method level
+	- if transaction exists, suspend it and create a new transaction
+- @Transactional(propagation = Propagation.NESTED) - method level
+	- if transaction exists, create a savepoint and use it
+@EnableTransactionManagement - class level
+
+Dirty read: Read uncommitted data | dirty read
+Non repeatable read: Read committed data | no dirty read but non-repeatable read
+Repeatable read: Read repeatable data | no dirty read and no non-repeatable read
+
+
+@Transaction isolation level
+Problem                             What Happens                                    Isolation Level to Prevent
+Dirty Read                          Reads uncommitted data                          READ COMMITTED (NoSQL, elasticSearch)
+Non-Repeatable Read                 Same row read twice → different data            REPEATABLE READ (DEFAULT for MYSQL)
+Phantom Read                        Same query → different row count                SERIALIZABLE
+
+🔹 1. Dirty Read
+Definition:
+When a transaction reads uncommitted (temporary) data from another ongoing transaction.
+
+Example:
+	•	T1: Updates a customer’s balance from 1000 → 500 (but hasn’t committed).
+	•	T2: Reads the new balance (500) before T1 commits.
+	•	If T1 later rolls back, T2 has read data that never actually existed → a dirty read.
+
+How to Avoid:
+	•	Use READ COMMITTED or higher isolation level.
+	•	Most databases (like Oracle, PostgreSQL) default to this to prevent dirty reads.
+
+⸻
+
+🔹 2. Non-Repeatable Read
+Definition:
+When a transaction reads the same row twice and gets different values because another transaction modified and committed it in between.
+
+Example:
+	•	T1: Reads customer balance = 1000.
+	•	T2: Updates balance = 500 and commits.
+	•	T1: Reads the same balance again = 500.
+→ T1 got different results in the same transaction — a non-repeatable read.
+
+How to Avoid:
+	•	Use REPEATABLE READ or SERIALIZABLE isolation level.
+	•	Lock the row for the duration of the transaction (SELECT ... FOR UPDATE).
+
+⸻
+
+🔹 3. Phantom Read
+
+Definition:
+When a transaction re-executes a query returning a set of rows and finds new or missing rows due to another transaction’s insert/delete.
+
+Example:
+	•	T1: Executes SELECT * FROM Orders WHERE amount > 1000 → returns 5 rows.
+	•	T2: Inserts a new order with amount = 1500 and commits.
+	•	T1: Executes the same query again → now returns 6 rows.
+→ The new “phantom” row causes a phantom read.
+
+How to Avoid:
+	•	Use SERIALIZABLE isolation level (highest level).
+	•	Database ensures transactions run as if they were serialized — no new rows can appear mid-transaction.
+
+
+SQL query to return all the jobs that are in-progress from job table and tasks table based on start time and end time
+SELECT
+    j.job_id,
+    j.job_name,
+    j.start_time AS job_start,
+    j.end_time AS job_end,
+    t.task_id,
+    t.task_name,
+    t.start_time AS task_start,
+    t.end_time AS task_end
+FROM job j
+JOIN task t ON j.job_id = t.job_id
+WHERE
+    -- Job in progress
+    j.start_time <= CURRENT_TIMESTAMP
+    AND (j.end_time IS NULL OR j.end_time > CURRENT_TIMESTAMP)
+
+    -- Task in progress
+    AND t.start_time <= CURRENT_TIMESTAMP
+    AND (t.end_time IS NULL OR t.end_time > CURRENT_TIMESTAMP);
+
+
+
+any situation where you stuck and how you resolved it?
+		- merchant-analytics
+    		- situation:
+    			merchant-analytics was taking too much time to ingestion pipeline.
+    		- choice/action:
+    			- I've analysed the problem and found that we are using ES for search and analytics both.
+    			- Set elasticsearch refresh interval to 10 min.
+    			- I've proposed to use spark for analytics and ES for search only(no agg/computation on elasticsearch).
+    			- I've implemented the same and it was working fine.
+    		- outcome:
+    			- we were able to reduce ingestion time from 2 hours to 30 mins.
+
+    	- merchant-analytics
+    		- situation:
+    			merchant-analytics query was having high latency.
+    		- choice/action:
+    			- I've analysed the documents modeling and optimised to use keyword type for aggregation fields.
+    		- outcome:
+    			- we were able to reduce query latency from 2 minutes to 30 secs.
+    			- we were able to reduce ES cost from 32TB to 23TB.
+
+    	- merchant-analytics
+    		- situation:
+    			High latency for customer analytics query.
+    		- choice/action:
+    			- Database partitioning/sharding
+    				sharded mid_custid_master[3TB] table on mids.
+    				- mid_custid_master_0, mid_custid_master_1, mid_custid_master_2, mid_custid_master_3, mid_custid_master_4, mid_custid_master_5, mid_custid_master_6, mid_custid_master_7, mid_custid_master_8, mid_custid_master_9
+    				- use field type as keyword for aggregation fields
+    		- outcome:
+    			- we were able to reduce query latency from 2 minutes to 30 secs.
+    			- we were able to reduce ES cost from 32TB to 23TB.
+
+find the middle of the linkedList
+	- two pointers
+	- one pointer moves one node at a time
+	- another pointer moves two nodes at a time
+	- when the second pointer reaches the end, the first pointer will be at the middle
+
+given arrival and departure of train,
+	- give the minimum number of platforms required
+	- time interval when the maximum number of trains are present
+
+
+R2
+----
+Project explanation
+in project what have you analysed and what have you implemented to fix
+	- merchant-analytics
+		- situation:
+			slow ingestion pipelines
+			merchant-analytics was taking too much time to ingestion pipeline.
+		- choice/action:
+			- I've analysed the problem and found that we are using ES for search and analytics both.
+			- Set elasticsearch refresh interval to 10 min.
+			- I've proposed to use spark for analytics and ES for search only(no agg/computation on elasticsearch).
+			- I've implemented the same and it was working fine.
+		- outcome:
+			- we were able to reduce ingestion time from 2 hours to 30 mins.
+
+	- merchant-analytics
+		- situation:
+			High latency for customer analytics query.
+		- choice/action:
+			- Database partitioning/sharding
+				sharded mid_custid_master[3TB] table on mids.
+				- mid_custid_master_0, mid_custid_master_1, mid_custid_master_2, mid_custid_master_3, mid_custid_master_4, mid_custid_master_5, mid_custid_master_6, mid_custid_master_7, mid_custid_master_8, mid_custid_master_9
+				- use field type as keyword for aggregation fields
+		- outcome:
+			- we were able to reduce query latency from 2 minutes to 30 secs.
+			- we were able to reduce ES cost from 32TB to 23TB.
+
+Data:
+	Structured: (DataSet)
+		- Relational DBMS
+	Semi-structured: (Dataframe)
+		- JSON
+		- XML
+	Unstructured: (RDD)
+		- logs/lines
+		- images
+
+RDD vs DataFrame vs DataSet
+
+- Dataset/Dataframe ---> Catalyst Optimizer ---> (optimised)RDD ---> DAG ---> Spark Engine ---> Cluster Manager ---> Cluster
+
+
+RDD:
+	- Data  500MB
+		- partitions1 (128 HDFS) - Node 1
+		- partitions2 (128 HDFS) - Node 2
+		- partitions3 (128 HDFS) - Node 2
+		- partitions4 (128 HDFS) - Node 3
+
+	- operations:
+		- transformation
+			- map -> narrow
+			- filter
+			- flatMap
+			- groupByKey -> wide (suffle)
+			- reduceByKey -> wide
+			- join
+			- cogroup
+			- union
+			- intersection
+			- distinct
+		- action
+			- collect
+			- count
+			- countByValue
+			- take
+			- top
+			- reduce
+
+DAG:
+	- DAG - Directed Acyclic Graph
+	- DAG is a logical representation of RDD transformations.
+	- DAG is created when an action is called on RDD
+
+
+
+RDD vs Dataframe vs DataSet
+RDD:
+	- Distributed collection of elements
+	- immutable
+	- unstructured
+	- no compile time type safety
+	- no optimization
+	- API
+	- full control but complex
+Dataframe:
+	- Organized into named columns
+	- immutable
+	- structured
+	- compile time type safety
+	- optimization : catalyst optimizer
+	- API
+	- limited control but simple
+Dataset:
+	- Extension of dataframe
+	- immutable
+	- structured and semi-structured
+	- compile time type safety
+	- optimization: catalyst optimizer
+	- API
+	- advance Encoders
+	- limited control but simple
+
+ConcurrentHashMap
+
+ConcurrentHashMap vs HashTable vs SynchronizedMap
+ConcurrentHashMap:
+	- lock striping at segment level
+	- better performance
+	- null key and null value not allowed
+	- iterator is weakly consistent but not fail-fast
+	- no blocking
+HashTable:
+	- locking at method level
+	- poor performance
+	- null key and null value not allowed
+	- iterator is fail-fast
+	- blocking
+SynchronizedMap:
+	- locking at object level
+	- poor performance
+	- null key and null value allowed
+	- iterator is fail-fast
+	- blocking
+
+Fail-fast vs Fail-safe
+Fail-fast:
+	- iterator is fail-fast
+	- iterator throws ConcurrentModificationException
+	- works on the original collection
+	import java.util.*;
+
+    public class FailFastExample {
+        public static void main(String[] args) {
+            List<String> list = new ArrayList<>();
+            list.add("A");
+            list.add("B");
+            list.add("C");
+
+            Iterator<String> it = list.iterator();
+            while (it.hasNext()) {
+                String value = it.next();
+                System.out.println(value);
+                // Structural modification during iteration
+                if (value.equals("B")) {
+                    list.remove(value); // ❌ Throws ConcurrentModificationException
+                    it.remove(); // ✅ Safe removal through iterator
+                }
+            }
+        }
+    }
+
+Fail-safe:
+	- iterator is fail-safe
+	- iterator does not throw ConcurrentModificationException
+	- works on the copy/snapshot of the collection
+
+    public class FailSafeExample {
+        public static void main(String[] args) {
+            Map<String, String> map = new ConcurrentHashMap<>();
+            map.put("1", "A");
+            map.put("2", "B");
+            map.put("3", "C");
+
+            for (String key : map.keySet()) {
+                System.out.println(key + " = " + map.get(key));
+                map.put("4", "D"); // ✅ No exception (Fail-Safe)
+            }
+        }
+    }
+
+
+
+SOLID principles
+	- Single responsibility principle
+	- Open/closed principle
+	- Liskov substitution principle
+	- Interface segregation principle
+	- Dependency inversion principle
+
+Mysql locking mechanism
+	- shared lock
+	- exclusive lock
+	Locking level:
+		- table level
+		- row level (InnoDB: default)
+
+locking Strategies:
+	- optimistic lock
+		- assuming less chance of collision
+		- acquired lock only when updating the record
+	- pessimistic lock
+		- assuming more chance of collision
+		- acquired lock from start to end of transactionn
+
+Kafka: event streaming platform works on pub-sub model
+    Broker
+    Producer
+    Consumer
+	Consumer group
+	Topic
+	Partition
+	re-balancing
+how do you ensure there is no data loss in kafka while consuming from a topic
+    send manual ack after processing
+how do ensure there is no data loss in kafka while consumer is down
+    __consumer_offset
+how do you ensure there is no data loss in kafka while producer is down
+    ack=0, ack=1, ack=all
+how do you ensure there is no data loss in kafka while broker is down
+    broker has nothing to do with data loss
+how do you ensure there is no data loss in Kafka when ZooKeeper is down?
+
+
+Which CAP properties are followed by Kafka
+	•	Kafka is Partition-Tolerant (P)
+	•	Can be Consistent (C) or Available (A) depending on producer & topic configuration:
+	Config                                 Effect on CAP
+    acks=all + min.insync.replicas>1       C + P, may reduce availability under partition
+    acks=1 or acks=0                       A + P, may lose consistency during partition
+Default Kafka Configuration
+	•	Producer acks=1 → The leader writes the message and responds immediately; followers replicate asynchronously.
+	•	Replication factor = 1 (by default, if not changed) → No replication unless explicitly configured.
+	•	min.insync.replicas = 1 → Only one replica (the leader) is required to acknowledge.
+With default settings, Kafka behaves as AP system (Availability + Partition Tolerance):
+
+
+Which CAP properties are followed by Elasticsearch
+By default, Elasticsearch behaves as an AP system (Availability + Partition Tolerance):
+CAP Property                                     Behavior
+Consistency                                      Eventual (weak consistency)
+Availability                                     High (reads/writes possible if at least one shard copy is available)
+Partition Tolerance                              Yes (can operate under network partitions)
+
+spark version: 3.5.0
+scala version: 2.13.0
+kafka version: 3.2.0
+spring boot version: 3.0.2
+elasticsearch version: 7.10.2
+Redis version: 4.2.6
+java version: 17
+react version: 17.0.1
+Angular version: 10
+
+
+Middle in linkedList
+
+how spark steaming consume data from kafka : DirectStream vs Structured Streaming API(latest)
+spark = SparkSession.Builder().appName("app").master("local[*]").getOrCreate()
+kafkaDF =  spark.readStream.format("kafka")
+        .option("kafka.bootstrap.servers", "localhost:9092")
+        .option("subscribe", "topic")
+        .option("startingOffsets", "earliest")
+        .load()
+val messages = kafkaDF.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)")
+val processed =   messages.withColumn("value_upper", upper(col("value")))
+val query = processed.writeStream
+    .format("console") // for demo; could be Kafka, HDFS, etc.
+    .option("checkpointLocation", "/tmp/checkpoints")
+    .start()
+query.awaitTermination()
+
+approach:
+	Kafka-direct-connect: direct connection b/w spark streaming and kafka topic+partitions to consumer data in batch
+	Receiver approach: create Receiver on spark worker node to receive data and store -> then proceessed by spark-streaming
+	structured-streaming-approach: structured+sql-query
+
+	🌀 DStreams (Discretized Streams) — the classic model
+    	•	Spark chops incoming data into small batches (say, every 2 seconds).
+    	•	Each batch becomes an RDD, and your transformations (map, filter, etc.) run on those RDDs just like in batch Spark.
+    	•	After processing, results are pushed to sinks (files, databases, dashboards).
+    	•	Spark keeps track of processed batches via checkpointing, ensuring recovery after failure.
+
+    In short:
+
+    DStreams treat the data stream as a sequence of mini-batches of RDDs. Each batch is processed independently — like watching a movie frame by frame.
+
+	⚡ Structured Streaming — the modern engine
+    	•	Spark treats streaming data as a continuously growing table.
+    	•	Each new event (or batch) is just a new row appended to that table.
+    	•	You write queries on that table using DataFrame or SQL syntax — Spark handles batching, offsets, and recovery automatically.
+    	•	It supports event-time windows, watermarks, and exactly-once semantics out of the box.
+
+    In short:
+
+    Structured Streaming sees the stream as a live table — your query runs continuously, and Spark updates results as new rows arrive.
+
+SpringBoot @Component, @Service, @Repository, @Controller
+
+SpringBoot @Conditional, @ConditionalOnBean  @ConditionalOnProperty annotation
+Annotation                                              Purpose
+@Conditional                                            load bean on Generic condition based on custom Condition implementation
+@ConditionalOnBean                                      Load bean only if another bean exists in the Spring context
+@ConditionalOnProperty                                  Load bean only if a specific property exists or matches a value
+
+
+how do maintain transaction in springBoot
+	@Transaction
+can you @Transaction on private method - No
+    When you call a transactional method through the proxy, Spring intercepts the call and starts a transaction.
+    Spring only intercepts public methods by default. Private, protected, or package-private methods are not proxied.
+
+World wide ecommerce project
+	- How to do maintain the data consistency across the globe
+	A. Use Distributed Databases / Global Data Stores
+    	•	Examples: Cassandra, DynamoDB Global Tables, CockroachDB, Google Spanner
+    	•	Features:
+            •	Multi-region replication
+            •	Tunable consistency (strong / eventual)
+            •	Conflict resolution
+
+    Example:
+    	•	Amazon DynamoDB Global Tables replicates tables across regions.
+    	•	You can choose eventual consistency for non-critical data (product catalog) and strong consistency for inventory or payment data.
+
+    ⸻
+
+    B. Event-Driven Architecture
+    	•	Use Kafka / Pulsar / Kinesis for real-time event streaming.
+    	•	Events are published (e.g., OrderCreated, InventoryUpdated) and consumed by services in other regions.
+    	•	Ensures eventual consistency across services and regions.
+    	Region A: Order placed → Inventory reduced locally → Publish event to Kafka
+        Region B: Consume event → Update regional cache / global view
+
+    C. Distributed Transactions / Saga Pattern
+        •	Two-phase commit (2PC) is slow and not ideal globally.
+        •	Prefer Saga pattern for distributed transactions:
+        •	Each service performs a local transaction and publishes an event.
+        •	Compensating transactions are used to rollback if needed.
+
+        Example:
+            1.	Customer orders a product in the US region.
+            2.	Inventory service in US reserves stock.
+            3.	Payment service confirms payment.
+            4.	Shipping service schedules shipment.
+            5.	If any step fails, compensating transactions are triggered (refund, release inventory).
+        ⸻
+        E. Idempotency Operations & Conflict Resolution(version number)
+        	•	All operations should be idempotent, especially inventory updates and payments.
+        	•	Use timestamps or version numbers to resolve conflicts across regions.
+       ⸻
+        D. Caching & Read Replicas
+        	•	Use regional caches (Redis / Memcached) and read replicas to serve users fast.
+        	•	Writes go to the primary region; replicas update asynchronously.
+        	•	Tradeoff: slightly stale reads are acceptable for non-critical data (like product views)
+
+
+	- how to do maintain time in different time zones
+		- use UTC time stamp
+		- convert to local time zone
+
+Docker-eco System experience
+what do you do in code review practices: SOLID principal
+how deployment in your project - ec2, jenkins
+

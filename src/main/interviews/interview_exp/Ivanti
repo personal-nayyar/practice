@@ -1,0 +1,101 @@
+R1
+- project task explanation
+- Parenthesis checker
+- find pivoted index in sorted rotated array
+
+
+R2
+ - Java 8
+    class Employee {
+		String name;
+		int age;
+		String department;
+	}
+    - given a list of Employee objects, give a map of employee department to employee objects.
+    - given a list of Employee objects, give a map of employee department to employee namelist.
+        list.stream().collect(Collectors.groupingBy(Employee::getDept)); // return dept --> list of employee
+        list.stream().collect(Collectors.groupingBy(Employee::getDept, Collectors.mapping(Employee::getName, Collectors.toList()))); // return dept --> list of name
+        list.stream().collect(Collectors.groupingBy(Employee::getDept, Collectors.counting()));  // return dept --> count
+        list.stream().collect(Collectors.groupingBy(Employee::getDept, Collectors.summingInt(Employee::getSalary))); // return dept --> sum of salary
+        list.stream().collect(Collectors.groupingBy(Employee::getDept, Collectors.maxBy(Comparator.comparing(Employee::getSalary)))); // return dept --> max salary
+        list.stream().collect(Collectors.groupingBy(Employee::getDept, Collectors.minBy(Comparator.comparing(Employee::getSalary)))); // return dept --> min salary
+        list.stream().collect(Collectors.groupingBy(Employee::getDept, Collectors.averagingInt(Employee::getSalary))); // return dept --> avg salary
+        list.stream().collect(Collectors.groupingBy(Employee::getDept, Collectors.summarizingInt(Employee::getSalary)));// return dept --> summary of salary
+        list.stream().collect(Collectors.groupingBy(Employee::getDept, Collectors.mapping(Employee::getName, Collectors.joining(", ")))) ;// return dept --> comma separated name
+        list.stream().collect(Collectors.groupingBy(Employee::getDept, Collectors.mapping(Employee::getName, Collectors.joining(", ", "[", "]")))) ;// return dept --> comma separated name with prefix and suffix
+}
+- Parenthesis checker
+- m1(), m2(), m3()
+	- call in multithreading environment and collect return value
+	- m1() -> return 1
+	- m2() -> return 2
+	- m3() -> return 3
+	  Expected output: 1, 2, 3
+
+	  public static void main(String[] args) {
+              ExecutorService executor = Executors.newFixedThreadPool(3);
+
+              // Step 1: Run m1, then m2, then m3 in sequence
+              CompletableFuture<List<Integer>> resultFuture =
+                  CompletableFuture.supplyAsync(() -> {
+                      int r1 = m1();
+                      return new ArrayList<>(List.of(r1));
+                  }, executor)
+                  .thenApplyAsync(list -> {
+                      int r2 = m2();
+                      list.add(r2);
+                      return list;
+                  }, executor)
+                  .thenApplyAsync(list -> {
+                      int r3 = m3();
+                      list.add(r3);
+                      return list;
+                  }, executor);
+
+              // Step 2: Wait for all to complete and get results
+              List<Integer> results = resultFuture.join();
+
+              System.out.println("Final Results: " + results);
+
+              executor.shutdown();
+          }
+
+	  provide java multithreading code for above scenario
+	  code:
+	  public class Test {
+	  		public static void main(String[] args) {
+	  		    ExecutorService executorService = Executors.newFixedThreadPool(3);
+	  			Future<Integer> future1 = executorService.submit(() -> m1());
+	  			Future<Integer> future2 = executorService.submit(() -> m2());
+	  			Future<Integer> future3 = executorService.submit(() -> m3());
+	  			try {
+	  				System.out.println(future1.get());
+	  				System.out.println(future2.get());
+	  				System.out.println(future3.get());
+	  			} catch (InterruptedException | ExecutionException e) {
+	  				e.printStackTrace();
+	  			}
+	  		}
+	  }
+
+- given that an API is having latency, how would you optimise it.
+solution:
+1. API profiling(DB query, Network I/O, CPU Utilisation, compute)
+2. Data Optimizations
+    •	Cache frequently accessed data (Redis, in-memory).
+    •	Use pagination or projections to fetch only required fields.
+    •	Optimize DB queries and add appropriate indexes.
+3.	Code-Level Improvements
+    •	Avoid blocking I/O by using async or non-blocking calls (e.g., CompletableFuture, Reactor).
+    •	Use connection pooling and efficient serialization (e.g., JSON → Protobuf if large payloads).
+    •	Batch or debounce requests when possible.
+4.	Infrastructure & Network
+	•	Reduce hops between services; consider co-locating dependent services.
+	•	Enable HTTP/2, compression, and persistent connections.
+	•	Scale horizontally and load balancing
+	•	add a CDN for static content.
+5.	Architectural Changes (if systemic)
+	•	Introduce caching layers, rate limiters, or message queues for load leveling.
+	•	Break large synchronous chains into event-driven or asynchronous pipelines.
+R3
+ - Cloud experience

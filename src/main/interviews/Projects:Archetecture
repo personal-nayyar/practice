@@ -1,0 +1,76 @@
+Projects/Architecture
+---------------------
+merchant-analytics:
+    🎯 How to present in interviews
+    You can summarize like this:
+    “At Paytm, I worked on Merchant Analytics, a SaaS-based analytics platform that provided merchants with actionable insights across four key areas
+        — Payment Source Analysis, Success Rate Analysis, Customer Analysis, and Industry vs You.
+    It helped merchants monitor payment reliability, customer behavior, and industry benchmarks, helping merchants improve conversion rates, retention, and revenue visibility.
+    I was responsible for designing backend modules for data ingestion, aggregation, and real-time metric computation using Java, Spring Boot, and distributed data stores.”
+
+    💳 1. Payment Source Analysis
+
+    Purpose:
+    To help merchants understand which payment instruments their customers are using — such as UPI, wallets, credit/debit cards, or net banking — and how each performs over time.
+
+    Use Case:
+    Merchants can see what percentage of their transactions come from each payment source, along with metrics like transaction count, volume, and average order value.
+    This helps them optimize payment method availability, negotiate better rates, or target promotions (e.g., UPI cashback vs card offers).
+
+    Example Insight:
+
+    “UPI transactions grew 25% MoM while card usage dropped 10% — indicating a shift in customer payment preference.”
+
+    Business Value:
+    Improves conversion rates and payment experience by identifying the most preferred and reliable payment methods for customers.
+
+    ⸻
+
+    📈 2. Success Rate Analysis
+
+    Purpose:
+    To provide merchants visibility into payment success/failure rates across different payment methods, banks, and gateways.
+
+    Use Case:
+    Helps merchants and internal Paytm ops teams pinpoint failure reasons — like network issues, bank downtime, or gateway bottlenecks — and take proactive steps.
+
+    Example Insight:
+
+    “HDFC Bank’s UPI success rate dropped to 92% between 2–3 PM — leading to 5% drop in checkout conversions.”
+
+    Business Value:
+    Improves transaction reliability, reduces payment drop-offs, and builds trust with end users by identifying and mitigating issues quickly.
+
+    ⸻
+
+    👥 3. Customer Analysis
+
+    Purpose:
+    To give merchants a 360° view of their customer base — behavior, spending patterns, frequency, and demographics.
+
+    Use Case:
+    Merchants can segment customers into cohorts — new, returning, loyal, or dormant — and analyze metrics like average transaction value, purchase frequency, or recency.
+
+    Example Insight:
+
+    “40% of transactions are from repeat customers; high-value users contribute 60% of total volume.”
+
+    Business Value:
+    Empowers merchants to run targeted marketing campaigns, loyalty programs, and customer retention strategies based on data-backed insights.
+
+    ⸻
+
+    🏭 4. Industry vs You Analysis
+
+    Purpose:
+    To benchmark a merchant’s performance against industry averages or peer merchants in similar categories (e.g., food delivery, retail, travel).
+
+    Use Case:
+    Allows merchants to understand whether their success rate, customer retention, or payment mix is better or worse than industry peers.
+
+    Example Insight:
+
+    “Your average transaction success rate (94%) is higher than industry average (91%), but repeat customer ratio is 10% lower.”
+
+    Business Value:
+    Drives strategic decisions and helps merchants identify gaps in performance, set realistic goals, and prioritize areas for improvement.

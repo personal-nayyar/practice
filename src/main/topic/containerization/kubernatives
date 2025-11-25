@@ -1,0 +1,13 @@
+Container:
+	- application,
+	- logging-agent
+	- proxy
+	we can put all the thing within container but increase the process and hard to manage the sequence and kill one of them when needed
+Pod:
+	- put one or more container within the pod and run single pod instead a container
+	- container within the pod share resources CPU, memory, disk
+
+Kubernetes:
+	- container orchestration
+	- application, load-balancing, config-registry
+	- can manage 1000s of container(micro-services)

@@ -1,0 +1,206 @@
+strings strs , group the anagrams together. You can return the answer in any order.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+Input: strs = ["Eat","Tea","Tan","ate","nat","bat"]
+Output: [["bat"],["nat","Tan"],["ate","Eat","Tea"]]
+
+["Eat", "Tea", "Tan", "ate", "nat", "bat"] -> No of anagrams = 3
+["Eat", "Tea", "ate"] -> ["Eat", "Tea", "ate"]
+["Tan", "nat"] -> ["Tan", "nat"]
+["bat"] -> ["bat"]
+
+Given an integer array of unique elements, return all possible subsets (the power set). (backtracking)
+The solution set must not contain duplicate subsets. Return the solution in any order.
+Example 1:
+Input: nums = [1,2,3]
+result = [[],[1],[2],[3],[1,2],[1,3],[2,3],[1,2,3]]
+
+
+
+R2
+---
+SOLID principles:
+	S - Single Responsibility Principle
+		- A class should have one and only one reason to change,
+		meaning that a class should have only one responsibility.
+		ex: BankAccount class should only be changed for changes in the bank account,
+	O - Open Closed Principle
+		- Objects or entities should be open for extension but closed for modification.
+		ex: Notification Service class should be open for extension but closed for modification.
+	L - Liskov Substitution Principle
+		- Every subclass/derived class should be substitutable for their base/parent class.
+		ex: Square and Rectangle class
+	I - Interface Segregation Principle
+		- A client should never be forced to implement an interface that it doesn’t use
+		or clients shouldn’t be forced to depend on methods they do not use.
+		ex: IPrinter, IMachine, IMultiFunctionPrinter
+	D - Dependency Inversion Principle
+		- It states that the high level module must not depend on the low level module, but they should depend on abstractions.
+		ex: High level module -> Computer, Phone
+			Low level module -> HardDisk, Memory, CPU, Screen
+
+Design a microservice API that return firstNonRepeatingCharacter in a string using java 8 streams.
+str.stream()
+    .mapToObject(c- > (char)c)
+    .collect(Collectors.groupBy(Function.identity(),
+        LinkedHashMap::new,  // for first element (maintain order)
+        Collectors.counting()))
+    .entrySet().stream()
+    .filter(entry -> entry.getValue() == 1)
+    .map(Map.Entry::getKey)
+    .findFirst();
+
+str.chars()
+    .mapToChar()
+    .filter(c -> str.firstIndexOf(c) == str.lastIndexOf(c))
+    .findFirst()
+    .orElse(null);
+
+
+input.chars()
+	.mapToObj(c -> (char) c)
+    .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()))
+	.entrySet().stream()
+                .filter(entry -> entry.getValue() == 1)
+                .map(Map.Entry::getKey)
+                .findFirst();
+input.chars()
+	.mapToObj(c -> (char) c)
+	.filter(ch-> input.firstIndexOf(ch) == input.lastIndexOf(ch))
+	.findFist();
+
+
+
+
+A -> B
+   A -> C (down)
+What if C is down for 1 hour, how will you handle it?
+	- circuit breaker
+	- exponential retry mechanism
+	- fail-over to backup
+What if there is some transactional data in C, how will you handle it?
+	- compensating transaction: (SAGA pattern) // for rollback
+	- Idempotent transaction (handle retries) // data redundancy
+What if there is a transaction including A, B and C, how will you handle it?
+	- Distributed transaction mechanism/patter eg. saga
+	- eventual consistency if possible:
+	- compensating transaction: revert changes in service if any of the service fails
+
+
+Immutable class
+	- A class that once created, cannot be modified.
+	- All the fields of the class are final and private.
+	- No setters for the fields.
+	- No methods that can change the state of the object.
+	- If the class has any references to mutable objects, then they must be cloned in the constructor.
+	- If the class has any references to mutable objects, then they must be cloned when returning the object.
+	- If the class is extending a mutable class, then all the methods that can change the state of the parent class must be overridden to throw an exception.
+
+Builder Design patter
+	- When there are a lot of parameters to be passed to the constructor, it is difficult to remember the order of the parameters.
+	- The number of parameters to the constructor can be reduced by using the Builder design pattern.
+	- The Builder design pattern is a creational design pattern that lets us create an object one step at a time.
+	- The Builder design pattern involves three classes:
+		- The Builder class
+		- The Product class
+		- The Director class
+	- The Builder class is responsible for creating the complex object.
+	- The Product class is the complex object that is created by the Builder class.
+	- The Director class is responsible for calling the appropriate methods of the Builder class to create the complex object.
+	- The Builder design pattern is used to create immutable objects.
+	- The Builder design pattern is used to create objects that have a lot of member variables.
+	- The Builder design pattern is used to create objects that need parameters to be passed to multiple constructors.
+
+Kafka partition and zookeeper relation
+	Kafka partitions are distributed across the cluster and each partition is replicated across multiple brokers.
+	Each partition has a leader and zero or more followers.
+	Each partition has a unique id called the partition id.
+	Each partition has a unique offset called the log offset. // message written to a partition gets a unique offset
+	Each partition has a unique offset called the high watermark.// The last message safely committed to all replicas.
+	Each partition has a unique offset called the low watermark. // smallest offset still retained in the log (after retention expire)
+	Each partition has a unique offset called the last committed offset. //  last offset successfully processed (and committed) by a consumer group
+
+	Zookeeper is used to store the metadata of the Kafka cluster.
+Zookeeper:
+	Kafka coordinator
+		- meta data
+		- service registry of brokers and consumer
+		- __consumer_offset
+		- leader election
+	KRaft:
+	    - Zookeeper is not used now
+	    - Kafka is used as a coordinator
+	    -
+
+Java8 features
+	- Functional Interfaces
+	- Lambda Expressions
+	- Method References
+	- Streams
+	- Optional
+	- Default/Static Methods
+	- forEach() method in Iterable interface
+
+sequential stream vs parallel stream
+sequential: 
+	- sequential processing
+	- single threaded
+	- order matters
+	- simple and easy debug
+parallel stream:
+	- parallel processing
+	- multi-threaded
+	- unordered
+	- complexity such as synchorization, race condition etc.
+
+
+Internal implementation of Concurrent Hashmap
+	- ConcurrentHashMap is a thread-safe version of HashMap.
+	- ConcurrentHashMap is a hash table supporting full concurrency of retrievals and high expected concurrency for updates.
+	- ConcurrentHashMap is a segmented hash table.
+	- ConcurrentHashMap is divided into segments and each segment is a hash table.
+	- ConcurrentHashMap is divided into segments and each segment is guarded by a lock.
+	- ConcurrentHashMap is divided into segments and each segment is a hash table and each segment is guarded by a lock.
+	- ConcurrentHashMap is divided into segments and each segment is a hash table and each segment is guarded by a lock and each segment is a separate thread.
+	- ConcurrentHashMap is divided into segments and each segment is a hash table and each segment is guarded by a lock and each segment is a separate thread and each segment is a separate thread and each segment is a separate thread.
+	- ConcurrentHashMap is divided into segments and each segment is a hash table and each segment is guarded by a lock and each segment is a separate thread and each segment is a separate thread and each segment is a separate thread and each segment is a separate thread.
+	- ConcurrentHashMap is divided into segments and each segment is a hash table and each segment is guarded by a lock and each segment is a separate thread and each segment is a separate thread and each segment is a separate thread and each segment is a separate thread and each segment is a separate thread.
+
+
+Composition vs abstraction
+	Composition:
+		- Composition is a way to combine simple objects or data types into more complex ones.
+		- Strong relationship
+		- Child object does not have its own life cycle
+		ex: Car has an engine
+	Abstraction:
+		- Abstraction is a way to hide the implementation details and show only the functionality to the userSplitWises.
+		- Weak relationship
+		- Child object has its own life cycle
+		ex: Car has a steering wheel
+
+SpringBoot advantages
+
+@Value vs @Autowired
+	- @Value is used to inject values into fields from properties file in Spring beans.
+	- @Autowired is used to inject beans into fields in Spring beans.
+
+@SpringBootApplication
+	- @SpringBootApplication is a convenience annotation that adds all of the following:
+		- @Configuration
+			- @Configuration indicates that a class declares one or more @Bean methods and may be processed by the Spring container to generate bean definitions and service requests for those beans at runtime.
+		- @EnableAutoConfiguration
+			- @EnableAutoConfiguration enables Spring Boot’s auto-configuration mechanism.
+		- @ComponentScan
+			- @ComponentScan tells Spring to look for other components, configurations, and services in the com/example package, letting it find the controllers.
+
+Bean scope in springBoot
+	- Singleton
+	- Prototype
+	  - A new instance is created every time the bean is requested.
+	  - @Scope("prototype"), @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE), @bean(name = "beanName", scope = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	- Request
+	- Session
+	- GlobalSession
+	- Application
+	- Websocket

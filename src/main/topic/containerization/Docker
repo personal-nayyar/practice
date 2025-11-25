@@ -1,0 +1,30 @@
+s/w Process:
+	feature requirement
+	Development
+	Testing
+	Deployment
+
+Developer-machine
+	- Application code
+	- Framework
+	- dependencies (DB mySQL 5.6)
+	- OS level lib (ubuntu)
+
+Tester-machine
+	- Application code
+	- Framework
+	- dependency (DB mySQL 7.0)
+	- OS level lib (windows)
+
+prob: application working fine on developer machine but not on tester machine [mySQL version 5.6 + ubuntu lib]
+sol: don't give only s/w but provide complete image/container(application+dependencies)
+note: container don't install new OS like hyperwiser/VMs
+
+ex:
+	OS1,OS2,OS3                         App1,App2,App3
+	Hyperwiser                            Docker
+		OS                                  OS
+	 Hardware                           Hardware
+
+containerization:
+	process of packaging application+dependency -> container

@@ -1,0 +1,29 @@
+Aws-lambda: server-less computing power
+
+similar:
+	EC2(Elastic Cloud Compute):(high flexibility) server provision only, need security, auto-scaling, load balancer,
+	ECS(Elastic Container Store):(mid flexibility and complexity) Docker-eco-system, cluster(EC2 servers) + tasks(application, bulk request)/images
+		images are stored in Elastic Container Repository and enable as tasks.
+	lambda:(no complexity, pay as per use) Function/code
+
+server-less:
+  Run code without provisioning or managing infrastructure. Simply write and upload code as a .zip file or container image.
+auto-scale:
+  Automatically respond to code execution requests at any scale, from a dozen events per day to hundreds of thousands per second.
+cost-per-use(100ms):
+  Save costs by paying only for the compute time you use—by per-millisecond—instead of provisioning infrastructure upfront for peak capacity.
+execution-optimised:
+  Respond to high demand in double-digit milliseconds with Provisioned Concurrency.
+  Optimize code execution time and performance with the right function memory size.
+
+use-cases:
+  cron-expression/schedule-events [cron(), rate()]
+  events
+	  file-processing [upload file to s3]
+	  db-update [update premium merchant]
+      mobile-backend [status update]
+  static web application [weather update]
+  stream-processing [social media tag etc]
+
+
+

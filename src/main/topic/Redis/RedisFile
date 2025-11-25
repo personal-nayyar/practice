@@ -1,0 +1,53 @@
+alternative: aerospike
+
+what to cache:
+	- frequently asked data
+	- costly to compute [heavy-compute-time] data
+
+cache:
+	- in-memory data-store for faster access
+	- avoid network/disk call
+	- cache runs on SSD(expensive)
+	- only relevant(useful) information
+	- multiple caching policy like LRU, priority , timeSeries
+	- in-memory application cache  vs distributed global cache vs file-system cache(CDN)
+
+cache_HIT:
+	when data is served by cache
+cache_MISS:
+	data is not present in cache and loaded from disk
+
+eviction policy:
+	- due to limited size of cache
+	- due to update on the data
+		- ttl or LRU
+
+strategy:
+	Cache-Aside (Lazy Loading):
+		- Simple and widely used caching strategy.
+		- Applications check the cache before accessing the primary data store.
+		- If data is not found in the cache, it's fetched from the primary store and then stored in the cache for subsequent requests.
+		- Easy to implement and works well for most use cases.
+	
+	Write-Through:
+		Data is written or updated in both the primary data store and cache simultaneously.
+		Ensures that cached data remains synchronized with the primary store.
+		Increases write latency as data is written to both storage systems.
+		Ensures data consistency but may impact write performance.
+
+	Write-Behind (Write-Back):
+		Data is initially written or updated in the cache and then asynchronously written to the primary data store.
+		Optimizes write operations by reducing latency.
+		Increases the risk of data loss in case of cache failures before data is written to the primary store.
+		Improves write performance but requires careful handling of data consistency.
+
+Redis-core
+	key -> value
+arch:
+	- support clustering
+		-master-slave
+		-primary-replica
+	- sharding
+		- instead of having single DB
+		- data is distributed across diff smaller shards (horizontal scaling)
+

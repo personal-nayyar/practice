@@ -1,0 +1,222 @@
+Behavioural Question
+
+Q- Tell me about yourself?
+<Thanks> <Present> <Skill> <Past> <Future> (tell (your) story)
+
+“Hi, I’m Mohd Nayyar. I did my MCA from NIT Karnataka in 2018 and since then I’ve worked for around 6 years as a Software Engineer.
+My experience is mainly in backend development, distributed systems,
+and data-intensive applications using Java, Spring Boot, MySQL, Kafka, Redis, Spark, and AWS.
+I’ve built SaaS platforms, real-time auction systems, and merchant analytics dashboards that helped businesses improve decision-making.
+Recently at Oracle, I worked on distributed system components like node indexing and reconciliation.
+I’m now looking for opportunities where I can contribute to scalable system design and also continue to grow in advanced data engineering.”
+
+    - First of all, thanks for the opportunity for this interview.
+	- My name is Mohd Nayyar, throught the process you can call me Nayyar.
+	- I'm post graduated from NIT karnataka in computer science in 2018. and then I start my career.
+	- I've around 6.5 years of experience in software development, mainly software development.
+	-  My expertise are mainly into backend development, distributed systems,
+	   and data-intensive applications using Java, Spring Boot, MySQL, Kafka, Redis, Spark, and AWS etc.
+	- I'm working with oracle from last 1.5 years and prior to that with paytm for last 3.5 years
+		- core responsibilities are
+			- end to end design n development from req gathering to feature delivery.
+			- owning of micro-services
+			- monitoring performance metrics and tuning
+			- monitoring junior dev
+	- I’m now looking for opportunities where I can contribute to scalable system design and continue enhancing my skills in software development.”
+
+behavioral_question:
+ - situation : situation you're in.
+ - choice/action: Action you've taken
+ - outcome : outcome of the action
+
+Q- Tell me about a time when you faced a problem with a project. How did you solve it?
+	- merchant-analytics
+		- situation:
+		    in merchant-analytics as our customer base was growing,
+		    we faced high latency for customer analytics query.
+		- choice/action:
+			- Database partitioning/sharding
+				sharded mid_custid_master[3TB] table on mids.
+				- mid_custid_master_0, mid_custid_master_1, mid_custid_master_2, mid_custid_master_3, mid_custid_master_4, mid_custid_master_5, mid_custid_master_6, mid_custid_master_7, mid_custid_master_8, mid_custid_master_9
+			- Document modeling
+			    - I've analysed the documents modeling and optimised to use keyword type for aggregation fields.
+		- outcome:
+			- we were able to reduce query latency from 2 minutes to 30 secs.
+			- we were able to reduce ES cost from 32TB to 23TB.
+
+
+	- merchant-analytics
+		- situation:
+			in merchant-analytics as our customer base was growing,
+			our ingestion pipelines were taking too much time to ingest data dueto elasticsearch script query.
+		- choice/action:
+		    - supported views:
+		        - hourly
+		        - daily
+		        - weekly
+		        - monthly
+		    - txns_<date>, mid_custId_daily_<date>, mid_custId_weekly_<date>, mid_custId_monthly_<date>
+			- I've analysed the problem and found that we are using ES for search and computations/scripting both.
+			- Set elasticsearch refresh interval to 1 min. (default 1 sec)
+			- I've proposed to use spark for computations/analytics and ES for search only(no agg/computation on elasticsearch).
+			- I've implemented the same and it was working fine.
+		- outcome:
+			- we were able to reduce ingestion time from 2 hours to 30 mins.
+
+	- merchant-analytics
+		- situation:
+			merchant-analytics query was having high latency.
+		- choice/action:
+			- I've analysed the documents modeling and optimised to use keyword type for aggregation fields.
+		- outcome:
+			- we were able to reduce query latency from 2 minutes to 30 secs.
+			- we were able to reduce ES cost from 32TB to 23TB.
+
+Feedback for improvement area from manager:
+	- take initiative to monitor junior dev.
+	- buffer time for sudden bottleneck/failure scenario.
+	    subscription-engine query txns date with high TPS
+
+Q- Tell us about a time when you disagreed with your superior.
+Q- ever refuse rude client(product-manager) requirement?
+	- merchant-analytics
+		- situation:
+			- Need to process/calculate mid based lat/long and ingest it into KYB team db.
+		- choice/action:
+			- Proposed to calculate it at our end but not to ingest it into KYB team db.
+			- Rather used s3 bucket to store it.
+			- KYB team can use it via api call or ingest it according to their need.
+		- outcome:
+			- loosely couple two systems.
+
+Q- ever refuse rude client(product-manager) requirement?
+	- merchant-analytics
+		- situation:
+			- Need to calculate mid based lat/long and ingest it into KYB team db.
+		- choice/action:
+			- Proposed to calculate it at our end but not to ingest it into KYB team db.
+			- Rather used s3 bucket to store it.
+			- KYB team can use it via api call or ingest it according to their need.
+		- outcome:
+			- loosely couple two systems.
+
+	- Merchant-analytics
+		- situation:
+			- requirement to apply transformation on transactional data before ingestion.
+		- choice/action:
+			- refused to apply transformation on transactional data before ingestion as might be useful for other team.
+			- proposed to apply transformation on API operation while query.
+			- proposed to apply transformation on aggregated data after ingestion.
+		- outcome:
+			- maintain the data integrity b/w PG and analytics.
+			- other system are able to consume the data.
+
+
+Q- ever had conflict with peer? how did you handle it.
+	- merchant-analytics
+        - situation:
+            - Need to calculate mid based lat/long and ingest it into KYB team db.
+        - choice/action:
+            - Proposed to calculate it at our end but not to ingest it into KYB team db.
+            - Rather used s3 bucket to store it.
+            - KYB team can use it via api call or ingest it according to their need.
+        - outcome:
+            - loosely couple two systems.
+
+Q- Tell me about a mistake you made while working as a software developer. How did you handle it?
+Q- any scenario where you feel you have failed?
+	situation:
+		- subscription-engine query data from ES analytics with very high TPS.
+	choice/action:
+		- modified the existing indices to query data but didn't meet the TPS
+		- designed new indices to query data with less aggregation fields.
+	- outcome:
+		- we were able to meet the TPS.
+	- lesson learned:
+		- consider all the scenario and dependencies before designing the indices.
+		- take some buffer time for sudden failure scenario.
+		- get the things done first (nothing is perfect).
+
+
+Q- Have you ever get negative feedback from your boss? How did you handle it?
+	situation:
+		- having such experience not monitoring junior dev.
+	choice/action:
+		- started monitoring junior dev.
+		- started taking initiative to monitor junior dev.
+	- outcome:
+		- got positive feedback from manager.
+		- learn how to deal a team
+
+Q- What is your greatest accomplishment?
+	- getting enrolled in NIT karnataka without any coaching.
+	- announced as galaxy of star for the month jun 2023.
+		- worked on purging part of merchant-analytics that was recognised since it saves a lot of cost from ES. 
+		- 32TB - 23TB
+		- saves around $1500 per month.
+
+Q- When you don’t know the answer to something, what is the first thing that you do?
+	- buy time
+	- analyse the situation
+	- get multiple solution, make choice
+	- answer honest that you don't know but this could be best possible answer.
+
+Q- If you could design your dream job, what would it look like?
+	1. long-term career
+	4. personal growth with org growth
+	2. work life balance
+	3. challenging and motivated env/work
+
+
+
+Q- Can you tell me about a operation project you've worked on (outside of school or work) in the past year or so?
+	- designed a todo-application
+		- create a list of todo
+		- can mark as done
+		- reminder for todo
+
+	- designed a split-wise application
+		- create a group
+		- add members
+		- add expense
+		- settle up
+
+
+Q- Tell me about your process of getting work done. When you get a new job or take on a new project, how do you go about doing it successfully?
+	- Purpose
+		– why you want to do it
+	- Plan
+		– how the things will be done
+	- Process
+		- how you will do it (steps)
+	- Persistence
+		- keep doing it until it is done
+		- fail-safe backup plan
+	- Persuasive communication
+		- communicate with team/client
+	- Pride
+		- what pride you will get after doing it
+
+
+Q- Tell us about the most challenging project you worked on
+	Merchant-analytics
+		- handle 10 million transaction per day
+		- big data solving problem rather typical CRUD operation
+		- learnt new tech like spark, kafka, elasticsearch, AWS services
+		- learnt how to handle failure scenario
+		- learn to handle a team
+
+
+Q- Tell us about a time when you had to make a big decision for a crucial client project
+	architecture 2.0 changes which took around 3 months
+
+Q- What, according to you, are important aspects to maintain productivity at the workplace
+	- priorities your tasks
+	- Deadlines.
+	- Track time for tasks.
+	- Avoid unproductive meetings.
+	- use effective inter-communications
+
+Q- What lessons have you learned from the most challenging project you worked on?
+	- get the things done first (nothing is perfect)
+	- perfection comes with experience

@@ -1,0 +1,22 @@
+Interface vs Abstract class
+---------------------------
+Feature                     Interface                                                                       Abstract Class
+Purpose                     Defines a contract (what to do).                                                Provides a partial implementation (how to do).
+Implementation              Can only have method signatures (and since Java 8 — default & static methods).  Can have both abstract and concrete methods.
+State (fields)              Only public static final constants (no instance state).                         Can have instance variables, constructors, and state.
+Inheritance                 A class can implement multiple interfaces.                                      A class can extend only one abstract class.
+Constructors                Cannot have constructors.                                                       Can have constructors.
+Access modifiers            All methods are implicitly public abstract (except default / static).           Can have any access modifiers.
+Version                     Introduced since Java 1.0; evolved with Java 8–17 for flexibility.              Introduced in Java 1.0
+
+
+Use an Interface when…                                                                              Use an Abstract Class when…
+You just need to define a contract that multiple unrelated classes can implement                    You have closely related classes that share code, common state, or utility methods.
+(e.g., Comparable, Runnable).
+You want to achieve multiple inheritance of type (a class can implement multiple interfaces).       You need to provide default behavior, but still require subclasses to fill in specific parts.
+The behavior is independent of implementation details (e.g., logging, persistence, analytics).      The behavior shares data or helper methods (e.g., base HTTP handler with shared connection logic).
+
+🧠 2. How interfaces achieve decoupling
+Interfaces separate the contract (what to do) from the implementation (how it’s done).
+Instead of one class depending on another’s concrete type, it depends on an abstraction — the interface.
+

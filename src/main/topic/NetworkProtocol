@@ -1,0 +1,7 @@
+protocol:
+	set of rules
+network-protocol:
+	set to rules to effective communication within network
+
+types:
+	HTTP,XMPP, IP, UDP,FTP, SMTP, AMQP

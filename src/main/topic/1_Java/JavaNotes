@@ -1,0 +1,109 @@
+volatile vs synchronized:
+	volatile:
+		- guarantee  visibility
+		- read or write
+	synchronized
+		- read-modify-write
+		- atomicity+visibility
+
+Serialization:
+	java object -----> a byte stream and save in a file or send over a network.
+Deserialization:
+	byte stream -------> java object
+
+Access-specifier:
+	private: accessible withing the entity it is defined.
+	default: (package-private) only accessible inside the same package by default and it is also known as package-private (No modifiers needed).
+	protected: only accessible inside the same package + outside the package within child classes through inheritance only.
+	public: can be accessed from anywhere.
+
+    can you define class as private?
+	Note: So defining private access to the class will make it accessible inside the same package which default keyword already do for us,
+
+method print() always displays integers in base 10.
+any literal number with a decimal point u declare the computer will implicitly cast to double unless you include "F or f"
+	
+Note: the default constructor has the same access modifier as the class
+
+Thread()
+Thread(String name)
+Thread(Runnable target)
+Thread(Runnable r, String name)
+Thread(ThreadGroup group, String name)
+Thread(ThreadGroup g, Runnable r)
+Thread(ThreadGroup group, Runnable target, String name)
+
+
+String objects are immutable and any operation like concat(otherString s), replace("source", "replace") will create new one.
+why string is immutable
+
+in java always pass by value not pass by reference
+
+shift operator:
+	a <<  b => a * 2^b. [left shift == multiply by 2]
+	a >> b => a/2^b [right shift == divide by 2]
+
+switch(arg)
+	arg can be byte, char, short, int, long, String or enum
+
+if we pass Runnable as Thread() arg, Thread class will execute run method of runnable unless you override run method in Thread class.
+
+continue can only occur in loop context not alone with label
+
+finally block can not have a statement which throw checked Exception
+
+the Boolean String constructors are case insensitive like
+new Boolean("true")  -> Boolean.TRUE
+new Boolean("TRUE")  -> Boolean.TRUE
+new Boolean("tRue")  -> Boolean.TRUE
+
+Library vs framework:
+	Library[APIs]:
+		set of public APIs and is provided by a third party
+		and clients make calls to those public APIs to complete their tasks.
+	framework:
+		a structures/skeletons for developing software applications.
+		
+data-stream:
+	data which is being generated continuously.
+	ex: stock-data, gaming-data, social-media data, IOT data, transactional data.
+
+ When finally Might Not Execute
+ 	1.	JVM Shutdown via System.exit(...)
+ 	•	If you call System.exit(...) in a try or catch, it initiates JVM shutdown, so the finally block might not run.  ￼
+ 	•	The Oracle Java tutorials explicitly note this.  ￼
+ 	2.	Runtime.halt (or Abrupt Termination)
+ 	•	If you call Runtime.getRuntime().halt(...), the JVM halts immediately without giving finally a chance.  ￼
+ 	•	Also, if the JVM crashes (e.g. due to a fatal error), there’s no guarantee finally will run.  ￼
+ 	3.	The Thread Is Killed / Interrupted Before Finally
+ 	•	If the thread running the try / catch is forcefully killed (or the process is killed), finally may never execute.  ￼
+ 	•	Similarly, if we are in an infinite loop or unbounded recursion in the try block, control may never exit to reach the finally block.
+
+
+class Person {
+    private String id;
+    private String name;
+    // constructor + getters
+
+    public String getId() { return id; }
+    public String getName() { return name; }
+}
+And you have a List<Person> people that may have duplicate IDs. To create a Map<String, Person> where the key is id and in case of duplicates you ignore the new entry (i.e. keep the first Person seen), do this:
+
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+List<Person> people = …;
+
+Map<String, Person> map = people.stream()
+    .collect(Collectors.toMap(
+        Person::getId,           // key mapper
+        Function.identity(),     // value mapper — the Person object itself
+        (existing, replacement) -> existing  // merge function: ignore the new Person
+    ));￼
+
+Here:
+	•	Person::getId picks the key from each object.
+	•	Function.identity() returns the object itself as the value.
+	•	(existing, replacement) -> existing is the merge function. It says: when there’s a key collision, keep the existing value and discard the replacement.
