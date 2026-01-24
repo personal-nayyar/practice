@@ -1,0 +1,17 @@
+For n-by-n array, so I want to print the sum of the left diagonal elements and the right diagonal elements.
+So, can you come up with the logic to print that for a n-by-n array,
+the sum of the left diagonal and the right diagonal elements?
+
+
+We have a sorted array, and we can expect that sorted array has some duplicates also.
+So, given any number, you have to find the first and the last occurrence of that number,
+in case it is repeating multiple times in that sorted array.
+For example, if you have an array 1, 2, 3, 3, 4, 4, then 5, 5, like this,
+if there is a sorted array, and someone gives an input as 3.
+So, we have to print the first index position where number 3 is there, and the last index position at which number 3 is occurring.
+
+
+this is the classic Cookie Assignment Problem (Greedy algorithm), with the twist that:
+	•	A child is satisfied only if cookie size == child’s required size (exact match, not ≥).
+	•	Each child gets at most one cookie.
+	•	Each cookie can be used only once.

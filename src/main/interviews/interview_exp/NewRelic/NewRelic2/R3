@@ -1,0 +1,75 @@
+HM
+Project explanation
+    - any critical problem & how did you resolve this
+        - during peak time kafka consumer lags -> increase partition & autoscale spark-streaming
+            - does after this you face any problem ? doing so resolve the issue completely?
+    - Let's take an example, you have a Kaka event history, let's suppose in GBs and like payment history is there, and there is like some refund event, and to process that refund event,
+     you basically need to load all payment history into the memory, let's say for 10 days, you want to load that into the main memory to process this refund event, how would you do it?
+
+     “I will not load the entire 10-day payment history from Kafka on each service startup.
+     Instead, I will load it once, create a local snapshot using a persistent key-value store like RocksDB or ChronicleMap, and store the Kafka offset.
+     On every subsequent restart, I instantly restore the snapshot and then replay only the incremental events from Kafka after the stored offset.
+     This makes startup extremely fast and ensures I always have an up-to-date in-memory view for processing refund events.”
+
+                              ┌────────────────────────────┐
+                              │        Kafka Cluster        │
+                              │  Compacted Topic: payments  │
+                              │──────────────────────────────│
+                              │   Key = paymentId           │
+                              │   Value = payment event     │
+                              └──────────────┬──────────────┘
+                                             │ (initial load: 10 days)
+                                             ▼
+                               ┌───────────────────────────┐
+                               │   Service Bootstrapping   │
+                               │────────────────────────────│
+                               │ 1. Load snapshot from      │
+                               │    local persistent store  │
+                               │    (fast: ms–seconds)      │
+                               │                           │
+                               │ 2. Fetch ONLY deltas from  │
+                               │    Kafka after stored      │
+                               │    offset (small data)     │
+                               └──────────────┬────────────┘
+                                              │
+                                              ▼
+                             ┌─────────────────────────────────┐
+                             │        In-Memory Store          │
+                             │   (ConcurrentHashMap / off-heap)│
+                             │─────────────────────────────────│
+                             │ paymentId → PaymentData         │
+                             │                                 │
+                             │  • Rebuilt from snapshot        │
+                             │  • Updated by Kafka deltas      │
+                             └──────────────┬──────────────────┘
+                                            │
+                                            ▼
+                          ┌───────────────────────────────────────┐
+                          │ Local Persistent State Store          │
+                          │ (RocksDB / Chronicle Map / LMDB)      │
+                          │────────────────────────────────────────│
+                          │ Snapshot of last 10 days of payments   │
+                          │ Stored Kafka offset                    │
+                          │ Updated continuously while running     │
+                          └───────┬────────────────────────────────┘
+                                  │ read/write
+                                  ▼
+
+                         ┌────────────────────────────────────────────┐
+                         │       Refund Processing Engine              │
+                         │────────────────────────────────────────────│
+                         │ • Receives refund event                    │
+                         │ • Looks up payment from In-Memory Store    │
+                         │ • Applies business logic                   │
+                         │ • Emits refund result                      │
+                         └────────────────────────────────────────────┘
+
+                                  ▲
+                                  │
+                                  │ Uses consistent up-to-date view
+                                  │ of 10-day payment window
+
+
+
+    - Did you build something on agentic AI
+    - Did you use any agentic AI tool in your coding development problem, what's your opinion around it

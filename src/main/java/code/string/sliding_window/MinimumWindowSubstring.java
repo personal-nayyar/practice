@@ -44,7 +44,7 @@ public class MinimumWindowSubstring {
 
             // If char frequency matches with pattern, increase 'formed'
             if (patternFreq.containsKey(c) &&
-                    windowFreq.get(c).intValue() == patternFreq.get(c).intValue()) {
+                    windowFreq.get(c) == patternFreq.get(c)) {
                 formed++;
             }
 

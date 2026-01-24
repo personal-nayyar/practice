@@ -1,0 +1,246 @@
+You need to create a RESTful API to manage a list of users. The API should support operations to get all users, get a user by ID, create a new user,
+update a user, and delete a user. How would you implement this in Spring?
+
+controller
+service
+Repository
+Model
+
+
+@Setter
+@Getter
+@Entity
+class User{
+	@Id
+  GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+  @Column
+  private String name;
+
+  @Column
+  private String email
+
+	//....
+}
+
+// spring-data-JPA
+@Repository
+public interface UserRepository extends JpaRepository<User, Long>{
+
+}
+
+
+@Service
+public class UserService{
+		@Autowired
+    private UserRepository userRepository;
+
+    public List<User> getAllUsers(){
+    	return userRepository.findAll();
+    }
+
+    public User getUser(Long userId){
+    	Optional<User> optionalUser = userRepository.findById(userId);
+      if(optionalUser.isPresent()){
+      	return optionalUser.get();
+      }else{
+      	throw new IllegalArgumentException("User does not exist");
+      }
+    }
+
+    public User saveUser(User user){
+    	return userRepository.save(user);
+    }
+
+    public User updateUser(Long userId, User newUser){
+    	Optional<User> optionalUser = userRepository.findById(userId);
+      if(optionalUser.isPresent()){
+      	return userRepository.save(newUser);
+      }else{
+      	throw new IllegalArgumentException("User does not exist");
+      }
+    }
+
+    public void deleteUser(Long userId){
+    	Optional<User> optionalUser = userRepository.findById(userId);
+      if(optionalUser.isPresent()){
+      	return userRepository.delete(optionalUser.get());
+      }else{
+      	throw new IllegalArgumentException("User does not exist");
+      }
+    }
+}
+
+
+@RestController("/api/v1/users")
+public class UserController{
+
+  	@Autowired
+    private UserService userService;
+
+    @GetMapping
+    public List<User> getAllUser(){
+    	return userService.getAllUser();
+    }
+
+    @GetMapping("/{id}")
+    public List<User> getUser(@PathVariable Long userId){
+    	return userService.getUser(userId);
+    }
+
+    @PostMapping
+    public User createUser(@RequestBody User user){
+    	return userService.saveUser(user);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long userId){
+    	return userService.deleteUser(userId);
+    }
+}
+
+
+A business problem involving three entities — Book, Author, and Journal (JNR) and business role  — to design a complete system architecture around them.
+
+design a complete system architecture for a small-to-large product that manages Books, Authors, and Journals (JNR) plus business roles (authors, editors, reviewers, readers, admins, etc.).
+which includes domain model, major use-cases, APIs, data storage choices, scalability, event flows, security & compliance, monitoring, and deployment.
+
+
+domaim-model
+	- Book
+  - Author
+  - Journal
+  - BusinessRole
+  	- Authors
+    - Editors
+    - Review
+    - Admin
+    ......
+
+use-case:
+	Reader
+  	- buy/Rent
+  	- read books
+    - return/submit
+
+  Admin
+  	- issuing
+    - lists
+    - delete
+    - addNewBooks
+
+  authors
+  	- publish
+
+
+Data-storage:
+	RDBMS:  Mysql
+  Cloud: AWS
+  ObjectStorage: S3
+  SearchEngine: ElasticSearch (openSearch)
+  Message/Event: Kafka
+  Deployement: Docker & Kubernetts
+  CI/CD: jenkins
+
+micros-service:
+	UserService
+  	-User
+    	- Customer
+      - Admin
+    -authorise
+
+  BookService
+  	- manageBooks (libirary)
+    - search
+
+  JournalManageService
+  	- journalMange
+
+  AccesRoleService
+  	- Role based access
+
+  NotificationService
+  	- notifyUser
+
+  InventoryService
+  	- mangeInventoru
+
+
+
+function-requirement:
+
+APIs:
+	api/v1/books/
+  api/v1/journals/
+  api/v1/users
+  api/v1/users/roles
+  api/v1/issues/
+
+
+
+event flows:
+	book save -> inventory -> buy/rent/  -> read/review
+
+monitoring:
+	AWS cloudWatch -> nodes/services -> moniotoring (CPU, Memory, Thread, connection)
+	Graphana -> stat/event monitory
+	newRelic -> API monitoring
+  ....
+
+
+Secuitry-complains:
+	- JWT based authentication
+  - OAuth based Authenticaion
+  	- Role based acces control
+ - Rate limitter
+
+deployement:
+	instance: AWS EC2/ECS
+  pods: docker & kuberneets
+  API Gateway : Load balancer etc.
+
+
+
+create all permutation of a string  -
+input : abc
+output : abc,acb,bac,cab,bca,cba
+
+input : xyz
+output: xyz,xzy,yxz,zxy,yzx,zyx
+
+input: xy
+output:xy,yx
+
+												abc
+            (a,a)bc 		a(b,b)			ab(c,c)
+
+            a()
+
+
+
+
+java-code:
+	public List<String> getAllPermutations(String str){
+  	List<String> result = new ArrayList();
+    permutationsUtil(str.toCharArray(), 0, str.length()-1, result);
+    return result;
+  }
+
+  public List<String> permutationsUtil(char[] str, int left, int right, List<String> resut){
+  	if(left == righ){
+    		result.add(str.toString());
+    }
+  	// swap left, rtigh
+    for(int i=left; i<=right; i++){
+    			swap(arr, left, i)
+          permutationsUtil(str, left+1, right)
+          swap(arr, left, i); // backtrace
+    }
+  }
+
+  private void swap(char[] arr, int left, int right){
+  	char temp = arr[left];
+    arr[left] = arr[right];
+    arr[right] = temp;
+  }

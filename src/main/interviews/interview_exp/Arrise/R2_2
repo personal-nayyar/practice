@@ -1,0 +1,60 @@
+You've class HelloWorld.java which does nothing just print Hello World.
+You've compiled that class using using javac HelloWorld and HelloWorld.class gets generated.
+between the time that I type java HelloWorld, when I try to execute, and between the time it printed HelloWorld on the console, things happen. There are a lot of things that happen. So, can you walk me through the things that must have happened between that time?
+
+
+Can you explain me polymorphism? Or rather, can you explain me how Java does polymorphism?
+Class Parent{
+    public int sum(int a, int b){
+        sout("In parent class");
+        return a+b;
+    }
+}
+
+class Child extends Parent{
+    public float sum(float a, float b){
+        sout("In child class");
+        return a+b;
+    }
+}
+
+class Test{
+    psvm(String[] args){
+        Parent p = new Child();
+        p.sum(10,10);
+        p.sum(10.2+10.2);
+    }
+}
+
+In Java, when you use multiple threads, right, and suppose a resource is shared, the resource can be a variable,
+can be a file pointer, whatever it is, a resource is getting shared, right? In a multi-threading environment,
+this causes problems, right? Because you cannot control, you need to control which thread gets what. Otherwise,
+you will lose track of what is happening, right?
+Because it's not one or two threads, it's hundreds of threads in your system that is working.
+So you can do this controlling of which thread gets what in multiple ways in Java.
+Java itself provides the way, you don't have to do anything, right?
+Can you tell me how will you do that?
+At least two ways that you can control this sequencing of handling a shared resource.
+
+
+Below is a clean Java solution that creates three threads:
+	•	Thread-1 prints “FIFO”
+	•	Thread-2 prints “LIFO”
+	•	Thread-3 prints “RR”
+
+And the printed sequence must always be:
+FIFO LIFO RR
+FIFO LIFO RR
+...
+(repeated 10 times)
+
+can you distinguish between a pessimistic lock and an optimistic lock? You are pessimistic.
+
+Optimistic lock and pessimistic lock. Where do you set them while you do coding, in Java?
+You can choose, this kind of a lock based on the use case that I am working on, right? So, where do you set that?
+
+
+Atomic Integer and other like Atomic classes. So what is the use of them?
+Why do you use them?
+
+

@@ -1,0 +1,11 @@
+project discussion
+consideration when moving from monolithic to microservice
+composition over inheritance
+immutable class
+
+In multi-threaded systems you've got shared resources and with shared resources you've got problems like locking or deadlocks.
+How would you prevent deadlocks in a shared resource system?
+
+Write a method which performs string compression. For example, if an input string is aabbccccca then compression would be a2b2c5a1.
+If compressed string is not smaller than the input, then it should return original string. (Assume a-z only used in string)
+java code

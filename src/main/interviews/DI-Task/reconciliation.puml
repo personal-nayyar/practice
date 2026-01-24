@@ -1,0 +1,56 @@
+@startuml
+title OCI Data Integration – Task Reconciliation Sequence
+
+participant Client
+participant "Orchestration Engine\n(Control Plane)" as Orch
+participant "Task State Store" as Store
+participant "Execution Engine\n(DB / Spark / External)" as Exec
+participant "Reconciliation Loop" as Recon
+
+== Task Submission ==
+Client -> Orch: Trigger Pipeline Run
+Orch -> Store: Create Task (CREATED)
+Orch -> Store: Update Task (SCHEDULED)
+
+== Task Execution ==
+Orch -> Exec: Start Task Execution
+Orch -> Store: Update Task (RUNNING)
+
+== Normal Completion ==
+Exec -> Orch: Task Completed
+Orch -> Store: Update Task (COMPLETED)
+Orch -> Orch: Schedule Downstream Tasks
+
+== Failure Scenario: Callback Lost ==
+Exec -> Exec: Task Completes Successfully
+note right of Exec: Callback fails / network issue
+
+Recon -> Store: Scan RUNNING tasks
+Recon -> Exec: Query execution status
+Exec --> Recon: COMPLETED
+Recon -> Store: Update Task (COMPLETED)
+Recon -> Orch: Resume DAG execution
+
+== Failure Scenario: Execution Failure ==
+Exec -> Exec: Task Fails
+note right of Exec: No immediate callback
+
+Recon -> Store: Detect stale RUNNING task
+Recon -> Exec: Query execution status
+Exec --> Recon: FAILED
+Recon -> Store: Update Task (FAILED)
+
+alt Retry Available
+    Recon -> Store: Update Task (RETRYING)
+    Recon -> Orch: Trigger Retry
+else Retries Exhausted
+    Recon -> Store: Update Task (ABORTED)
+end
+
+== Orchestrator Crash Recovery ==
+note over Orch: Orchestrator restarts
+Recon -> Store: Load RUNNING tasks
+Recon -> Exec: Reconcile execution state
+Recon -> Store: Correct task state
+Recon -> Orch: Resume pipeline execution
+@enduml

@@ -1,12 +1,12 @@
 package LLD.machine_hd.ATM;
 
 import lombok.*;
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
+//import static org.junit.jupiter.api.Assertions.assertTrue;
+//import static org.junit.jupiter.api.Assertions.*;
 
 /*
 The ATM system should support basic operations such as balance inquiry, cash withdrawal, and cash deposit.
@@ -314,60 +314,60 @@ class Runner{
 
     }
 
-    @Test
-    public void test(){
-        ATMServiceImpl atmService = new ATMServiceImpl();
-        Account savingAccount = SavingsAccount.builder()
-                .accountNumber("123456")
-                .cardNumber("123456")
-                .pin("1234")
-                .balance(1000)
-                .status(AccountStatus.ACTIVE)
-                .interestRate(0.05)
-                .build();
-        Account currentAccount = CurrentAccount.builder()
-                .accountNumber("123457")
-                .cardNumber("123457")
-                .pin("1234")
-                .balance(1000)
-                .status(AccountStatus.ACTIVE)
-                .overdraftLimit(1000)
-                .build();
-
-        atmService.accountMap.put("123456", savingAccount);
-        atmService.accountMap.put("123457", currentAccount);
-
-
-        // test withdraw
-        assertTrue(atmService.withdraw("123456", 500));
-        assertEquals(500, atmService.checkBalance("123456"));
-
-        // test deposit
-        assertTrue(atmService.deposit("123456", 200));
-        assertEquals(700, atmService.checkBalance("123456"));
-
-        // test authentication
-        assertTrue(atmService.authenticate("123456", "1234"));
-        assertFalse(atmService.authenticate("123456", "12345"));
-
-        // test insufficient balance
-        try {
-            atmService.withdraw("123456", 1000);
-            fail("Should throw exception for insufficient balance");
-        } catch (RuntimeException e) {
-            assertEquals("Insufficient balance", e.getMessage());
-        }
-
-        // test inactive account
-        atmService.accountMap.get("123456").setStatus(AccountStatus.INACTIVE);
-        try {
-            atmService.withdraw("123456", 500);
-            fail("Should throw exception for inactive account");
-        } catch (RuntimeException e) {
-            assertEquals("Account is not active", e.getMessage());
-        }
+//    @Test
+//    public void test(){
+//        ATMServiceImpl atmService = new ATMServiceImpl();
+//        Account savingAccount = SavingsAccount.builder()
+//                .accountNumber("123456")
+//                .cardNumber("123456")
+//                .pin("1234")
+//                .balance(1000)
+//                .status(AccountStatus.ACTIVE)
+//                .interestRate(0.05)
+//                .build();
+//        Account currentAccount = CurrentAccount.builder()
+//                .accountNumber("123457")
+//                .cardNumber("123457")
+//                .pin("1234")
+//                .balance(1000)
+//                .status(AccountStatus.ACTIVE)
+//                .overdraftLimit(1000)
+//                .build();
+//
+//        atmService.accountMap.put("123456", savingAccount);
+//        atmService.accountMap.put("123457", currentAccount);
+//
+//
+//        // test withdraw
+//        assertTrue(atmService.withdraw("123456", 500));
+//        assertEquals(500, atmService.checkBalance("123456"));
+//
+//        // test deposit
+//        assertTrue(atmService.deposit("123456", 200));
+//        assertEquals(700, atmService.checkBalance("123456"));
+//
+//        // test authentication
+//        assertTrue(atmService.authenticate("123456", "1234"));
+//        assertFalse(atmService.authenticate("123456", "12345"));
+//
+//        // test insufficient balance
+//        try {
+//            atmService.withdraw("123456", 1000);
+//            fail("Should throw exception for insufficient balance");
+//        } catch (RuntimeException e) {
+//            assertEquals("Insufficient balance", e.getMessage());
+//        }
+//
+//        // test inactive account
+//        atmService.accountMap.get("123456").setStatus(AccountStatus.INACTIVE);
+//        try {
+//            atmService.withdraw("123456", 500);
+//            fail("Should throw exception for inactive account");
+//        } catch (RuntimeException e) {
+//            assertEquals("Account is not active", e.getMessage());
+//        }
     }
-}
+//}
 
 
 

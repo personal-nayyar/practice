@@ -1,0 +1,94 @@
+@startuml
+title OCI Data Integration – Task (Orchestration) Service Architecture
+
+skinparam componentStyle rectangle
+
+' ======================
+' Design-Time Layer
+' ======================
+package "Design & Build (Design-Time)" {
+    [Workspace]
+    [Data Assets\n(Connections)]
+    [Data Flows & Mappings]
+    [Tasks]
+    [Pipelines (DAG)]
+
+    [Workspace] --> [Data Assets\n(Connections)]
+    [Workspace] --> [Data Flows & Mappings]
+    [Data Flows & Mappings] --> [Tasks]
+    [Tasks] --> [Pipelines (DAG)]
+}
+
+' ======================
+' Publish Layer
+' ======================
+package "Publish (Runtime Boundary)" {
+    [Application\n(Published Pipeline)]
+}
+
+[Pipelines (DAG)] --> [Application\n(Published Pipeline)]
+
+' ======================
+' Triggers (Runtime Only)
+' ======================
+package "Triggers" {
+    [Manual Run]
+    [Scheduler]
+    [OCI Events]
+    [API / CLI]
+}
+
+[Manual Run] --> [Application\n(Published Pipeline)]
+[Scheduler] --> [Application\n(Published Pipeline)]
+[OCI Events] --> [Application\n(Published Pipeline)]
+[API / CLI] --> [Application\n(Published Pipeline)]
+
+' ======================
+' Runtime Orchestration Engine (Control Plane)
+' ======================
+package "Runtime Orchestration Engine (Control Plane)" {
+    [Dependency Resolution]
+    [Sequencing & Parallelism]
+    [Parameter Injection]
+    [Retry & Error Handling]
+}
+
+[Application\n(Published Pipeline)] --> [Dependency Resolution]
+[Dependency Resolution] --> [Sequencing & Parallelism]
+[Sequencing & Parallelism] --> [Parameter Injection]
+[Parameter Injection] --> [Retry & Error Handling]
+
+' ======================
+' Execution Layer (Data Plane)
+' ======================
+package "Execution Layer (Data Plane)" {
+    [Data Loader Task\n(DB Native Engine)]
+    [Integration Task\n(OCI DI Engine)]
+    [OCI Data Flow Task\n(Apache Spark)]
+    [SQL / REST Task\n(External Systems)]
+}
+
+' Delegation based on task type
+[Retry & Error Handling] --> [Data Loader Task\n(DB Native Engine)] : Data Loader Task
+[Retry & Error Handling] --> [Integration Task\n(OCI DI Engine)] : Integration Task
+[Retry & Error Handling] --> [OCI Data Flow Task\n(Apache Spark)] : Data Flow Task
+[Retry & Error Handling] --> [SQL / REST Task\n(External Systems)] : SQL / REST Task
+
+' ======================
+' Observability & Monitoring
+' ======================
+package "Monitoring & Management" {
+    [OCI Logging]
+    [OCI Monitoring & Metrics]
+    [Alerts & Notifications]
+}
+
+[Data Loader Task\n(DB Native Engine)] --> [OCI Logging]
+[Integration Task\n(OCI DI Engine)] --> [OCI Logging]
+[OCI Data Flow Task\n(Apache Spark)] --> [OCI Logging]
+[SQL / REST Task\n(External Systems)] --> [OCI Logging]
+
+[OCI Logging] --> [OCI Monitoring & Metrics]
+[OCI Monitoring & Metrics] --> [Alerts & Notifications]
+
+@enduml

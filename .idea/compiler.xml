@@ -10,22 +10,27 @@
         <module name="Practice" />
       </profile>
       <profile name="Annotation profile for practice" enabled="true">
-        <sourceOutputDir name="../generated-sources/annotations" />
-        <sourceTestOutputDir name="../generated-test-sources/test-annotations" />
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
         </processorPath>
-        <module name="practice.main" />
-        <module name="practice.test" />
+        <module name="practice" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="practice.main" target="17" />
+      <module name="practice.test" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Practice" options="-parameters" />
-      <module name="practice" options="-parameters" />
-      <module name="practice.main" options="-parameters" />
-      <module name="practice.test" options="-parameters" />
+      <module name="practice" options="-parameters -Xlint:all,-processing -parameters" />
+      <module name="practice.main" options="-parameters -Xlint:all,-processing -parameters" />
+      <module name="practice.test" options="-parameters -Xlint:all,-processing -parameters" />
     </option>
   </component>
 </project>

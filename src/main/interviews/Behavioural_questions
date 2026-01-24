@@ -3,31 +3,24 @@ Behavioural Question
 Q- Tell me about yourself?
 <Thanks> <Present> <Skill> <Past> <Future> (tell (your) story)
 
-“Hi, I’m Mohd Nayyar. I did my MCA from NIT Karnataka in 2018 and since then I’ve worked for around 6 years as a Software Engineer.
-My experience is mainly in backend development, distributed systems,
-and data-intensive applications using Java, Spring Boot, MySQL, Kafka, Redis, Spark, and AWS.
-I’ve built SaaS platforms, real-time auction systems, and merchant analytics dashboards that helped businesses improve decision-making.
-Recently at Oracle, I worked on distributed system components like node indexing and reconciliation.
-I’m now looking for opportunities where I can contribute to scalable system design and also continue to grow in advanced data engineering.”
-
     - First of all, thanks for the opportunity for this interview.
 	- My name is Mohd Nayyar, throught the process you can call me Nayyar.
-	- I'm post graduated from NIT karnataka in computer science in 2018. and then I start my career.
-	- I've around 6.5 years of experience in software development, mainly software development.
-	-  My expertise are mainly into backend development, distributed systems,
+	- I've done post graduated from NIT Surathkal in 2018. and then I start my career.
+	- I've around 7 years of experience in software development Industry.
+	-  My expertise are mainly into backend development specifically scalable distributed systems,
 	   and data-intensive applications using Java, Spring Boot, MySQL, Kafka, Redis, Spark, and AWS etc.
 	- I'm working with oracle from last 1.5 years and prior to that with paytm for last 3.5 years
 		- core responsibilities are
 			- end to end design n development from req gathering to feature delivery.
-			- owning of micro-services
-			- monitoring performance metrics and tuning
-			- monitoring junior dev
-	- I’m now looking for opportunities where I can contribute to scalable system design and continue enhancing my skills in software development.”
+			- owning of micro-services, monitoring, performance tuning and alerting
+			- mentoring junior dev
+	- I’m now looking for opportunities where I can contribute my expertise in scalable system design and continue enhancing my skills in software development.”
 
 behavioral_question:
- - situation : situation you're in.
- - choice/action: Action you've taken
- - outcome : outcome of the action
+ - Situation : situation you're in.
+ - Task : task it leads to.
+ - Action:/choice Action you've taken
+ - Result/outcome : outcome of the action
 
 Q- Tell me about a time when you faced a problem with a project. How did you solve it?
 	- merchant-analytics
@@ -47,21 +40,13 @@ Q- Tell me about a time when you faced a problem with a project. How did you sol
 
 	- merchant-analytics
 		- situation:
-			in merchant-analytics as our customer base was growing,
-			our ingestion pipelines were taking too much time to ingest data dueto elasticsearch script query.
+			- during peak time dueto high volume events we faced kafka lag and slower ingestion pipelines issue
 		- choice/action:
-		    - supported views:
-		        - hourly
-		        - daily
-		        - weekly
-		        - monthly
-		    - txns_<date>, mid_custId_daily_<date>, mid_custId_weekly_<date>, mid_custId_monthly_<date>
-			- I've analysed the problem and found that we are using ES for search and computations/scripting both.
-			- Set elasticsearch refresh interval to 1 min. (default 1 sec)
-			- I've proposed to use spark for computations/analytics and ES for search only(no agg/computation on elasticsearch).
-			- I've implemented the same and it was working fine.
+		    - optimised kafka partitions
+		    - enabled spark executors auto-scaling
+		    - optimised s3 batch and partitions
 		- outcome:
-			- we were able to reduce ingestion time from 2 hours to 30 mins.
+			- we were able to reduce ingestion time from 2 hours to 30 mins by around 60%.
 
 	- merchant-analytics
 		- situation:
@@ -163,9 +148,11 @@ Q- When you don’t know the answer to something, what is the first thing that y
 
 Q- If you could design your dream job, what would it look like?
 	1. long-term career
+	2. working on high impact, scalable system
+    3. challenging and motivated env/work
 	4. personal growth with org growth
 	2. work life balance
-	3. challenging and motivated env/work
+
 
 
 

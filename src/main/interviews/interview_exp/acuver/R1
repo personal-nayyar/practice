@@ -1,0 +1,63 @@
+Can you add default method in functional interface in java
+
+interface MyInterface{
+    default void m1(){
+        System.out.println("Hello world!");
+    }
+}
+
+interface MyInterface2{
+    default void m1(){
+        System.out.println("Hello world agai!");
+    }
+}
+
+class Test implements MyInterface, MyInterface2{
+
+    Test(){
+        MyInterface.super().m1(); // Not a correct way
+    }
+
+    public static void main (String[] args) throws java.lang.Exception
+	{
+	    Test t = new Test();
+	}
+}
+I want to call m1() without overriding
+
+
+Why streams are lazy evaluated operations?
+    - intermediate operation
+    - terminal operation --> evaluation take place
+
+We have different types of lists in Java, right? So,
+could you explain what are the types of lists that are supported by the streams in collecting?
+    - stream.toList(), stream.collect(Collectors.toList()), stream.collect(Collectors.toCollection(ArrayList::new))
+
+Which data structure behind the ArrayList and which data structure behind the LinkedList?
+
+[1,1,2,4,5]
+Within this array, you won't find duplicates. So, simpler approach is like linear search, but using two-pointer anyway,
+'I need to find the better approach, right? Mm-hmm.
+Are you able to see any difference between the two pointers and the linear approach or any such approach?
+
+
+[
+  ("Email", 3),
+  ("Deploy", 1),
+  ("Backup", 2),
+  ("FixBug", 1)
+] and email is my third priority.
+sort this using priority
+
+what are the @postContruct  annotation in the Spring Boot framework, right?
+@PostConstruct is used for startup initialization after dependencies are ready,
+@PreDestroy is used for graceful cleanup before application shutdown.
+
+The rate limiter, I hope we will be implementing. Basic implementation...
+
+HTTP Code for Rate Limiter
+
+if somebody calling your api under the hood you are using a database and that database is down and due to this your api is not working, you need to respond something to the user in this case which Http series and status you'll be using? How will be approaching to fix this? Explain in brief
+
+Why we need a Postgres? Already we have a MySQL, right? Why we need a Postgres and those databases?

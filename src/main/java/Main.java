@@ -1,17 +1,116 @@
 import LLD.util.address.Address;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 
 import java.net.http.HttpRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+
+@ToString
+@AllArgsConstructor
+class Task{
+    String name;
+    int priority;
+
+    public static void main(String[] args) {
+        List<Task> tasks = Arrays.asList(
+                new Task("Email", 3),
+                new Task("Deploy", 1),
+                new Task("backup", 2),
+                new Task("FixBug", 1));
+
+        tasks.sort((a,b) -> a.priority - b.priority);
+        tasks.stream().forEach(System.out::println);
+    }
+}
+
+
+@FunctionalInterface
+interface I1{
+    void m1();
+    default void d1(){
+        System.out.println("d1");
+    }
+
+//    void m3();.
+}
+
+@FunctionalInterface
+interface I2{
+    void m2();
+    default void d2(){
+        System.out.println("d2");
+    }
+}
+
+
+class Test1{
+    public static void main(String[] args) {
+        I1 i1 =  () -> {
+            System.out.println("m1");
+        };
+
+        I2 i2 = () -> {
+            System.out.println("m2");
+        };
+        i1.m1();
+        i1.d1();
+
+        i2.m2();
+        i2.d2();
+
+
+    }
+}
+
+interface M1{
+    default void m1(){
+        //... lots of business logic
+        System.out.println("m1");
+    }
+}
+
+
+interface M2 {
+    default void m1() {
+        System.out.println("m1");
+    }
+}
+
+// I want to call m1 without overloading it
+class MyClass implements M1, M2{
+
+    @Override
+    public void m1(){
+        M1.super.m1();
+    }
+
+    public static void main(String[] args) {
+        MyClass o =  new MyClass();
+        o.m1();
+    }
+}
+
+abstract class M1Abs implements M1{
+    @Override
+    public void m1(){
+        M1.super.m1();
+    }
+}
+
+// without actual overriding
+class MyClass2 extends M1Abs implements M2{
+    public static void main(String[] args) {
+        new MyClass2().m1();
+    }
+}
+
 
 class Main{
 //    public static void main(String[] args) {

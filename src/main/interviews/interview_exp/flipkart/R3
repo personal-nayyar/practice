@@ -1,0 +1,25 @@
+Hiring Manager
+--------------
+Project Explanation:
+    - Choose any project you're comfortable with
+    - What was the need of this project, what business problem it is solving
+    - Architecture of the project
+    - what was the problem you've faced and how do you resolve that
+
+Design problem:
+    During the Big billion days, we've promotional offer which has a certain limit.
+        (let's say 100000, on each order 100, once burn out user should not be able to use this offer)
+    We're having around 4000 orders/sec on bbd sale. we're consuming kafka event for orders.
+    How would you ensure that we don't accessed the promotion burnout limit.
+
+Managerial question:
+    You're having multiple task to be done. how to ensure to complete them
+        - Priority -> deadline -> time tracking
+    You're given a task that needs to be done by 31-Dec-2025, but you estimated that it is not possible to complete this in duration. how will you proceed?
+    Give that you need to deliver the complete feature (can not break into smaller task) and it's critical to deliver by deadline. how will you proceed?
+    Where do you see your self in coming 2-3 years
+    Why do you want to join flipkart
+
+Question you may asked:
+     How to do handle such traffic (eg. 10X) on big billion days
+     If everything goes well, what is the tech exposure some will have after joining.

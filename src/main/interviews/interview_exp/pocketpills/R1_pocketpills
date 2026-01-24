@@ -1,0 +1,134 @@
+Design a data structure that supports insert, delete, search and getRandom in constant time
+Design a data structure that supports the following operations in O(1) time.
+
+insert(x): Inserts an item x to the data structure if not already present.
+remove(x): Removes item x from the data structure if present. 
+search(x): Searches an item x in the data structure.
+getRandom(): Returns a random element from the current set of elements 
+
+
+
+public class RandomisedSet{
+	private ArrayList<Integer> list;
+	private Map<Integer, Integer> map;
+	private Random random;
+
+	RandomisedSet(){
+	this.list =  new ArrayList();
+	this.map = new HashMap();
+	this.random = new Random();
+}
+
+public boolean insert(int x){
+	if(map.containsKey(x))
+		return false;
+	list.add(x); // add at the end
+	map.put(x, list.size()-1);
+	return true;
+}
+
+public boolean search(int x){
+	return map.constainsKey(x);
+}
+
+public boolean remove(int x){
+	if(!map.containsKey(x))
+		return false;
+
+	int index = map.get(x);
+	int lastIndex = list.size()-1;
+	int lastElem = list.get(lastIndex);
+
+	// swap with last index
+list.set(index, lastelem);
+list.remove(lastIndex);
+
+map.put(lastElem, index);
+map.remove(x); // O(1)
+return true;	
+}
+
+
+
+	public int getRandom(){
+		int lastIndex = list.size()-1;
+	int randomIndex =  random.nextInt(lastIndex);
+	return list.get(randonIndex);
+}
+}
+
+
+Modify the rating of a food item listed in the system.
+Return the highest-rated food item for a type of cuisine in the system.
+Implement the FoodRatings class:
+
+FoodRatings(String[] foods, String[] cuisines, int[] ratings)  Initializes the system. The food items are described by foods, cuisines and ratings, all of which have a length of n.
+foods[i] is the name of the ith food,
+cuisines[i] is the type of cuisine of the ith food, and
+ratings[i] is the initial rating of the ith food.
+
+void changeRating(String food, int newRating)  Changes the rating of the food item with the name food.
+String highestRated(String cuisine)  Returns the name of the food item that has the highest rating for the given type of cuisine. If there is a tie, return the item with the lexicographically smaller name.
+
+["kimchi", "miso", "sushi", "moussaka", "ramen", "bulgogi"],  – food 
+["korean", "japanese", "japanese", "greek", "japanese", "korean"], - cuisines
+[9, 12, 8, 15, 14, 7] - rating
+
+
+
+
+class FoodRatings {
+
+    class Food{
+String name;
+String cuisine;
+int rating;
+    }
+
+    	Map<String, Food> foodMap; // name -> Food
+ 	Map<String, TreeSet<Food>> cuisineMap; // cuisine -> sorted foods
+
+private Comparator<Food> comp = (f1, f2) -> {
+	if(f1.rating != f2.rating)
+		return f2.rating - f1.rating; // desc
+	return f1.name.compareTo(f2.name); // based on name 
+} 
+
+    public FoodRatings(String[] foods, String[] cuisines, int[] ratings) {
+        foodMap  = new HashMap();
+	   cuisineMap = new HashMap();
+
+	   for(int i=0;  i<food.length; i++){
+		Food f =  new Food(food[i], cuisines[i], rating[i]);
+		foodMap.put(foods[i], f);
+
+	cuisineMap.computeIfAbsent(cuisines[i], k -> new TreeSet(comp));
+	cuisineMap.get(cuisines[i]).add(f);
+}
+    }
+    
+
+
+
+
+
+    public void changeRating(String food, int newRating) {
+        Food f = foodMap.get(food);
+	   TreeSet<Food> set = cuisineMap.get(f.cuisine);
+	
+	set.remove(f);
+f.rating = newRating;
+set.add(f);	
+    }
+    
+    public String highestRated(String cuisine) {
+	 TreeSet<Food> set = cuisineMap.get(cuisine);
+	 set.first().name;
+    }
+}
+
+
+
+
+
+

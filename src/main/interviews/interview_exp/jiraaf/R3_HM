@@ -1,0 +1,82 @@
+Puzzles:
+12 (Twelve) —>     6
+6 (Six) —->    3
+8 (Eight) —->   divide by 2 (X)  5 →
+—----------
+4 Four —> 4
+
+
+
+3 daughter
+a*b*c =   72
+1*1*72 = 72  	= 74
+1*2*36 = 72  	= 39
+1*3*24          	= 28
+1*4*18		= 23
+1*6*12		= 19
+1*8*9		= 18
+2*2*18		= 22
+2*3*12		= 17
+2*4*9		= 15
+2*6*6		= 14 X
+3*3*8		= 14
+3*4*6		= 13
+
+1/12     —-->
+2/12 	—-->
+
+1/11 —>
+
+======================
+2*6*6		= 14
+3*3*8		= 14
+======================
+…………..
+a*b*c =   72
+a+b+c = House no (14)
+2*2*18
+eldest = likes chocolate ice cream —> clearly one eldest
+
+
+100 capsules —> visually identical
+99 capsules —> non poisons  –> equal weight
+1 capsule —> poisons → diff weight (heavier/lighter)
+
+manual weighing balance with no weights
+goal: minimum number of times to use the weighing balance,
+Eat a single capsule
+
+
+
+
+
+
+50/50 X
+
+50   48
+50 - 50(25-25)
+
+1 →  50-50(right)
+	case1: right equal
+	case2: right unequals
+	(pick unequals (25)) 2 —->
+		12-12 (1)
+= → answer
+!=
+(6,6)
+
+
+50-50(X)
+
+logn
+
+
+49,  51 —> X
+49, 49  —> (2)
+	=  answer(2)
+           != (24,24) (1)
+
+
+49.49,2
+30,30, 40
+17,17, 66

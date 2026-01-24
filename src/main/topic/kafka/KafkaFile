@@ -20,9 +20,9 @@ Kafka:
 		-
 
 Producing strategies:
-	- At most once: The producer sends a message and does not really care if it arrives or not.
-	- At least once (default): The producer sends a message and wants to make sure that it arrives, but it does not care if it arrives more than once.
-	- Exactly once: The producer sends a message and wants to make sure that it arrives only once.
+	- At least once (default): (ack=1) The producer sends a message and wants to make sure that it delivered, but it does not care if it delivered more than once.
+	- At most once: (ack=0) The producer sends a message and does not really care if it delivered or not.
+	- Exactly once: The producer sends a message and wants to make sure that it delivered only once.
 
 Acknowledgement while producing:
 	ack = 0: we’re saying that we don’t want to receive the ack from Kafka.
@@ -31,7 +31,7 @@ Acknowledgement while producing:
 
 Acknowledgement while consuming:
 	- The consumer can also send acks to Kafka, to tell that the message was consumed.
-	- The consumer can send the ack in two ways:
+	- The consumer can send the ack in two ways: (Enable.auto.commit)
 		- Manual: the consumer will send the ack after processing the message.
 		- Automatic: the consumer will send the ack automatically after receiving the message.
 	- The consumer can also configure the acks in two ways:
@@ -57,7 +57,6 @@ Different from a messaging system, that the message is deleted after being consu
 
 
 
-- Each broker in a cluster is identified by an ID and contains at least one partition of a topic.
 - After connecting to any broker (called a bootstrap broker), you will be connected to the entire cluster.
 - The partitions are distributed among the brokers in the cluster, and each broker is responsible for one or more partitions.
 
@@ -67,8 +66,6 @@ It will ensure that even if a broker goes down, his data won’t be lost, becaus
 
 leader-follower architecture:
 - When a leader goes down, a replica will be automatically elected as a new leader by Zookeeper.
-
-
 
 
 RabbitMQ                    Kafka                               Aws-Kinesis             Aws-SQS

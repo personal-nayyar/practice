@@ -1,0 +1,43 @@
+Project explanation
+    - critical problem you've resolved
+
+Problem Statement
+
+Design a food delivery service like Uber Eats or DoorDash that connects customers with restaurants and delivery partners. Focus on the core ordering and delivery flow.
+
+Key Requirements
+
+Functional Requirements
+
+Users: Customers can browse restaurants, place orders, and track deliveries
+
+Restaurants: Can manage their menu and receive orders
+
+Delivery Partners: Can accept delivery assignments and update delivery status
+
+Core Features:
+
+Restaurant search by location, for simplicity, we should be able to find the restaurant within x km radius
+
+Order placement and payment
+
+Real-time order tracking and status tracking with audit log
+
+Basic delivery partner assignment
+
+Non-Functional Requirements
+
+Scale: 10M users, 100K restaurants, 50K delivery partners
+
+Peak load: 100K concurrent users during dinner time (7-9 PM)
+
+Latency: Search results < 500ms, order placement < 2s
+
+Availability: 99.9% uptime
+
+Remember: We're looking for a design you can explain and defend, not perfection. Make assumptions where needed and communicate them clearly.
+
+
+HLD
+DATA flow
+Database schema

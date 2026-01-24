@@ -1,0 +1,36 @@
+@startuml
+title OCI Data Integration – Task Reconciliation (Simplified Component View)
+
+skinparam componentStyle rectangle
+
+package "Control Plane" {
+  component "Trigger Manager" as Trigger
+  component "Orchestration Engine" as Orch
+  component "Task State Store" as Store
+  component "Reconciliation Service" as Recon
+}
+
+package "Data Plane" {
+  component "Execution Engine\n(DB / OCI DI / Spark)" as Exec
+}
+
+package "Observability" {
+  component "OCI Logging & Monitoring" as Obs
+}
+
+' ===== Primary Flow =====
+Trigger --> Orch : start pipeline
+Orch --> Exec : execute task
+Orch --> Store : persist state
+
+' ===== Reconciliation =====
+Recon --> Store : read / reconcile state
+Recon --> Exec : verify execution
+Recon --> Orch : correct / resume flow
+
+' ===== Observability =====
+Orch --> Obs
+Exec --> Obs
+Recon --> Obs
+
+@enduml

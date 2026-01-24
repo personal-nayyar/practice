@@ -1,0 +1,110 @@
+explain complex issue in your project and how you resolved it
+
+So basically, we are having a Microsoft Excel and it is having sheets and it is having cells.
+We need to identify or define how these are connected as an OOPs concept.
+
+
+You are having multiple cells which are having some values and there is another cell which is using some function.
+Let's say it is using some function like addition of two cells.
+So, if one is getting updated then the linked set should be automatically updated, right?
+Automatically updated. How do you implement such a design? We need to design it using Java design pattern.
+
+interface Observer {
+    void update();
+}
+
+interface Subject {
+    void addObserver(Observer o);
+    void removeObserver(Observer o);
+    void notifyObservers();
+}
+
+class Cell implements Subject {
+    private int value;
+    private List<Observer> observers = new ArrayList<>();
+
+    public void setValue(int value) {
+        this.value = value;
+        notifyObservers(); // auto-update dependents
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void addObserver(Observer o) { observers.add(o); }
+    public void removeObserver(Observer o) { observers.remove(o); }
+    public void notifyObservers() {
+        for (Observer o : observers) o.update();
+    }
+}
+
+class FormulaCell extends Cell implements Observer {
+    private Cell cell1;
+    private Cell cell2;
+
+    public FormulaCell(Cell c1, Cell c2) {
+        this.cell1 = c1;
+        this.cell2 = c2;
+
+        // Subscribe to changes
+        c1.addObserver(this);
+        c2.addObserver(this);
+
+        update(); // initial calculation
+    }
+
+    @Override
+    public void update() {
+        int newValue = cell1.getValue() + cell2.getValue();
+        super.setValue(newValue); // triggers its own observers if any
+    }
+}
+
+
+Describe a data structure for which getValue(int index), setValue(int index, int value), and setAllValues(int value) are all O(1)
+Below is the classic interview answer to this problem.
+We need a data structure supporting all three operations in O(1):
+	•	getValue(int index)
+	•	setValue(int index, int value)
+	•	setAllValues(int value)  ← the tricky part
+
+This is not possible with a normal array, because setAllValues() would take O(n).
+So we use a lazy global assignment trick.
+
+class O1Array {
+    private int[] value;              // stores individual values for each index
+    private int[] timestamp;          // stores the last update time for each index
+    private int globalValue;          // value set by the most recent setAllValues()
+    private int globalTimestamp;      // timestamp of last setAllValues() call
+    private int currentTime;          // global counter to track order of operations
+
+    public O1Array(int size) {
+        value = new int[size];        // initialize value array
+        timestamp = new int[size];    // initialize timestamp array
+        globalTimestamp = -1;         // no global update yet, so set to -1
+        currentTime = 0;              // start time counter at 0
+    }
+
+    // O(1)
+    public void setValue(int index, int val) {
+        value[index] = val;           // store the value directly at the index
+        timestamp[index] = currentTime++; // record current timestamp and increment time
+    }
+
+    // O(1)
+    public void setAllValues(int val) {
+        globalValue = val;            // update the global override value
+        globalTimestamp = currentTime++; // record timestamp of this global operation
+    }
+
+    // O(1)
+    public int getValue(int index) {
+        // If this index was updated AFTER the last global update
+        if (timestamp[index] > globalTimestamp) {
+            return value[index];      // return the specific value stored for this index
+        } else {
+            return globalValue;       // otherwise return the global value
+        }
+    }
+}

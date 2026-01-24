@@ -1,0 +1,12 @@
+Oracle DIS service architecture
+    - How do you orchestrate jobs
+    - why new pods are initialise every time job execution
+    - mentioned optimisation in resume
+
+
+You are working in a large-scale product company with hundreds of backend services and multiple mobile applications. The product teams release new features frequently, sometimes multiple times a day. Some features need to be gradually rolled out to a subset of users (for example, by country or by percentage), and occasionally features must be rolled back immediately using a kill switch due to production issues.
+Design a centralized feature flag system that supports gradual rollouts, targeted feature enablement, and instant rollbacks, while ensuring minimal to zero latency impact on critical user flows. The system should scale to thousands of services and be reliable even during partial failures.
+How would you approach the design? What key components, data models, and runtime evaluation strategies would you consider, and how would you ensure low latency and high availability?
+
+When designing a centralized feature flag system, there are multiple dimensions to consider—such as defining the right data models, deciding how backend services evaluate feature flags at runtime, and ensuring proper ownership, governance, and observability of features and their configurations.
+To make the discussion concrete, let’s pick one of these dimensions first—say data modeling, runtime evaluation, or governance—and walk through it in detail. How would you approach designing that part of the system, and what key considerations would guide your decisions?*
