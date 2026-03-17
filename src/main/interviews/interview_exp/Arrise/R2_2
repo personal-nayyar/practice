@@ -1,7 +1,26 @@
 You've class HelloWorld.java which does nothing just print Hello World.
 You've compiled that class using using javac HelloWorld and HelloWorld.class gets generated.
-between the time that I type java HelloWorld, when I try to execute, and between the time it printed HelloWorld on the console, things happen. There are a lot of things that happen. So, can you walk me through the things that must have happened between that time?
+between the time that I type java HelloWorld, when I try to execute, and between the time it printed HelloWorld on the console,
+there are a lot of things that happen. So, can you walk me through the things that must have happened between that time?
 
+Step-by-Step (Very Simple)
+	1.	OS starts JVM
+	    find the $JAVA_JOME/bin ans start a process (JRE)
+	    •	A new Java process is created
+	2.	JVM loads the classes
+	    •	Finds System classes and application from classpath, HelloWorld.class using ClassLoader
+	3.	Bytecode is verified
+	    •	JVM checks safety and correctness
+	4.	Class is initialized
+	    •	Static blocks and static variables run
+	5.	main() is called
+	    •	find the main method in bytecode & JVM starts main thread
+	6.	Code executes
+	    Reset the program counter and start executing instructions
+	    •	System.out.println() writes to console
+	7.	JVM exits
+	    Kill the main thread
+	    •	Program ends if no non-daemon threads exist
 
 Can you explain me polymorphism? Or rather, can you explain me how Java does polymorphism?
 Class Parent{
@@ -22,13 +41,13 @@ class Test{
     psvm(String[] args){
         Parent p = new Child();
         p.sum(10,10);
-        p.sum(10.2+10.2);
+        p.sum(10.2, 10.2);
     }
 }
 
-In Java, when you use multiple threads, right, and suppose a resource is shared, the resource can be a variable,
-can be a file pointer, whatever it is, a resource is getting shared, right? In a multi-threading environment,
-this causes problems, right? Because you cannot control, you need to control which thread gets what. Otherwise,
+In Java, when you use multiple threads, and suppose a resource is shared, the resource can be a variable,
+can be a file pointer, whatever it is, a resource is getting shared. In a multi-threading environment,
+this causes problems, Because you cannot control, you need to control which thread gets what. Otherwise,
 you will lose track of what is happening, right?
 Because it's not one or two threads, it's hundreds of threads in your system that is working.
 So you can do this controlling of which thread gets what in multiple ways in Java.
@@ -47,6 +66,9 @@ FIFO LIFO RR
 FIFO LIFO RR
 ...
 (repeated 10 times)
+counting semaphore:
+“A counting semaphore limits concurrent access to a fixed number of threads by managing multiple permits.”
+
 
 can you distinguish between a pessimistic lock and an optimistic lock? You are pessimistic.
 

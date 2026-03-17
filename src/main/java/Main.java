@@ -1,15 +1,167 @@
 import LLD.util.address.Address;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.SneakyThrows;
 import lombok.ToString;
 
-import java.net.http.HttpRequest;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+class Test4{
+    public static final int MAX_COUNT =10;
+
+    public static void main(String[] args) {
+        Semaphore s1 = new Semaphore(1); // for FIFO
+        Semaphore s2 = new Semaphore(0); // for LIFO
+        Semaphore s3 = new Semaphore(0); // for RR
+
+        Thread t1 = new Thread("Thread-1"){
+            @SneakyThrows
+            @Override
+            public void run(){
+                for (int i = 0; i < MAX_COUNT; i++) {
+                    s1.acquire();
+                    System.out.print("FIFO,");
+                    s2.release();
+                }
+            }
+        };
+
+        Thread t2 = new Thread("Thread-1"){
+            @SneakyThrows
+            @Override
+            public void run(){
+                for (int i = 0; i < MAX_COUNT; i++) {
+                    s2.acquire();
+                    System.out.print("LIFO,");
+                    s3.release();
+                }
+            }
+        };
+
+        Thread t3 = new Thread("Thread-1"){
+            @SneakyThrows
+            @Override
+            public void run(){
+                for (int i = 0; i < MAX_COUNT; i++) {
+                    s3.acquire();
+                    System.out.println("RR,");
+                    s1.release();
+                }
+            }
+        };
+
+        t1.start();
+        t2.start();
+        t3.start();
+    }
+}
+
+class Test3{
+    public static final int MAX_COUNT = 10;
+    public static int turn = 0;
+    public static void main(String[] args) throws  Exception{
+        Object lock = new Object();;
+
+        Thread t1 = new Thread("Thread-0"){
+            @SneakyThrows
+            @Override
+            public void run(){
+                synchronized (lock){
+                    for (int i = 0; i < MAX_COUNT; i++) {
+                        while (turn  != 0){
+                            lock.wait(); // release lock
+                        }
+                        System.out.print("FIFO,");
+                        turn = 1;
+                        lock.notifyAll();
+                    }
+                }
+            }
+        };
+
+        Thread t2 = new Thread("Thread-1"){
+            @SneakyThrows
+            @Override
+            public void run(){
+                synchronized (lock){
+                    for (int i = 0; i < MAX_COUNT; i++) {
+                        while (turn  != 1){
+                            lock.wait(); // release lock
+                        }
+                        System.out.print("LIFO,");
+                        turn = 2;
+                        lock.notifyAll();
+                    }
+                }
+            }
+        };
+
+        Thread t3 = new Thread("Thread-2"){
+            @SneakyThrows
+            @Override
+            public void run(){
+                synchronized (lock){
+                    for (int i = 0; i < MAX_COUNT; i++) {
+                        while (turn  != 2){
+                           lock.wait(); // release lock
+                        }
+                        System.out.println("RR,");
+                        turn = 0;
+                        lock.notifyAll();
+                    }
+                }
+            }
+        };
+
+        // print FIFO, LIFO,RR in sequence.... 10 times
+        t1.start();
+        t2.start();
+        t3.start();
+    }
+}
+
+
+
+class Parent{
+    public int sum(int a, int b){
+        System.out.println("In parent class");
+        return a+b;
+    }
+
+    public double sum(double a, double b){
+        System.out.println("In child class double");
+        return a+b;
+    }
+}
+
+class Child extends Parent{
+    public int sum(int a, int b){
+        System.out.println("In child class int");
+        return a+b;
+    }
+
+    public float sum(float a, float b){
+        System.out.println("In child class float");
+        return a+b;
+    }
+}
+
+class Test2{
+    public static void main(String[] args) {
+        Parent p = new Child();
+        p.sum(10,10);
+        p.sum(10.2, 10.2);
+    }
+}
+
+
+
+
+
 
 
 @ToString
