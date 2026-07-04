@@ -78,6 +78,26 @@ mvn spring-boot:run  # runs the configured main class (Main)
 - Reusable LLD primitives belong in `LLD/util/`; check there before writing a new
   payment/notification/user abstraction.
 
+## Git & credentials
+
+This is a **personal** repository, hosted at
+`https://github.com/personal-nayyar/practice.git`. Push/pull must use the
+personal GitHub account **`personal-nayyar`**, not any work account (e.g.
+`mnayyar_paypal`) that may also be logged into `gh` for `github.com`.
+
+The account is pinned per-repo (already configured; recorded here so it can be
+restored if the local config is lost):
+
+```bash
+# git uses gh's credential helper for github.com...
+gh auth setup-git --hostname github.com
+# ...and this repo always authenticates as personal-nayyar
+git config --local credential.https://github.com.username personal-nayyar
+```
+
+With this in place, commits and pushes here use `personal-nayyar` regardless of
+which `gh` account is globally active — no `gh auth switch` needed.
+
 ## Reference docs
 
 - `DESIGN_DIAGRAMS.md` — architecture/diagram notes.
